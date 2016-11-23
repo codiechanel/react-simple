@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import googleTrends from 'google-trends-api'
 
 class App extends Component {
   render() {
@@ -16,6 +17,15 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidMount() {
+    googleTrends.trendData({ keywords: 'OJ Simpson' })
+      .then(function (trendData) {
+        console.log('here are the results', trendData);
+      })
+
+  }
+
 }
 
 export default App;
