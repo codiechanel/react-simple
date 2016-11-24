@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import Foo from '../Foo'
 import { BrowserRouter, Match, Miss, Link } from 'react-router';
 // import * as constant from '../common/constants'
+import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
@@ -24,15 +25,14 @@ export default class HotTrends extends Component {
 
     return (<div className="list-group-item" key={index}>
       <Link to={targetLink}><b> {item.title} </b>  </Link>
-     <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_title"][0])} />
-   <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_snippet"][0])} />
-  <div>
-  <a href={item["ht:news_item"]["0"]["ht:news_item_url"][0]}>
-   {item["ht:news_item"]["0"]["ht:news_item_source"][0]}</a> <span className="tag tag-success">{item["ht:approx_traffic"][0]}</span>
- 
+      <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_title"][0])} />
+      <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_snippet"][0])} />
+      <div>
+        <a href={item["ht:news_item"]["0"]["ht:news_item_url"][0]}>
+          {item["ht:news_item"]["0"]["ht:news_item_source"][0]}</a> <span className="tag tag-success">{item["ht:approx_traffic"][0]}</span>
+      </div>
+      <TopRelated keyword={item.title} />
 
-  </div>
-  
     </div>)
 
   }

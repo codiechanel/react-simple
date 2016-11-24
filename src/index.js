@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import NavBar from './components/NavBar'
 import HotTrends from './components/HotTrends'
+import Search from './components/Search'
 import { BrowserRouter, Match, Miss, Link } from 'react-router';
 
 import { createStore, applyMiddleware, combineReducers } from 'redux'
@@ -12,7 +13,7 @@ ReactDOM.render(
    <BrowserRouter >
     <div style={{ display: 'flex', flex: 1, height: '100%', backgroundColor: '#050600', flexDirection: 'column' }} >
    <NavBar />
-  <HotTrends />
+  <Search />
   </div>
    </BrowserRouter >,
   document.getElementById('root')
