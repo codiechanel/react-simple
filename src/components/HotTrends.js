@@ -25,6 +25,10 @@ export default class HotTrends extends Component {
     return (<div className="list-group-item" key={index}>
       <Link to={targetLink}><b> {item.title} </b>  </Link>
      <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_title"][0])} />
+   <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_snippet"][0])} />
+  <div>
+  {item["ht:news_item"]["0"]["ht:news_item_source"][0]}
+  </div>
   
     </div>)
 
@@ -33,7 +37,7 @@ export default class HotTrends extends Component {
   render() {
     return (<div style={divStyle} >
 
-      <h1 style={{ padding: '5px' }}>Categories</h1>
+      <h1 style={{ padding: '5px' }}>Hot Trends</h1>
       <div style={{ flex: 1 }} className="list-group">
         {this.state.items.map(this.rows)}
       </div>
