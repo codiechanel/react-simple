@@ -27,7 +27,10 @@ export default class HotTrends extends Component {
      <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_title"][0])} />
    <div dangerouslySetInnerHTML={this.createMarkup(item["ht:news_item"]["0"]["ht:news_item_snippet"][0])} />
   <div>
-  {item["ht:news_item"]["0"]["ht:news_item_source"][0]}
+  <a href={item["ht:news_item"]["0"]["ht:news_item_url"][0]}>
+   {item["ht:news_item"]["0"]["ht:news_item_source"][0]}</a> <span className="tag tag-success">{item["ht:approx_traffic"][0]}</span>
+ 
+
   </div>
   
     </div>)
