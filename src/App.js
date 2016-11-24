@@ -52,7 +52,7 @@ class App extends Component {
       body: 'ajax=1&pn=p1&htv=m'
     }
 
-    let url = 'http://8115feda-0ee0-4-231-b9ee.azurewebsites.net/hotTrendsDetail'
+    let url = 'http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/hotTrendsDetail'
     const settings2 = {
       url,
       responseType: 'json'
