@@ -2,17 +2,17 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 import {  Link } from 'react-router';
-// import * as constant from '../common/constants'
+ import * as constant from '../common/constants'
 // import { connect } from 'react-redux'
 
 class NavBar extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props,ctx) {
+    super(props,ctx);
     //    console.log(ctx)
     this.props = props
     // this.state = { status: 'Connecting...' }
-    // this.store = ctx.store
+    this.store = ctx.store
     // console.log("app constrtr", this.store)
 
   }
@@ -79,9 +79,11 @@ class NavBar extends Component {
     });
 
     // Obtain AWS credentials
-    AWS.config.credentials.get(function(){
+    AWS.config.credentials.get(() => {
         // Access AWS resources here.
           var identityId = AWS.config.credentials.identityId;
+          this.store.dispatch({type:constant.AWS_CONNECTED})
+
 
   console.log('AmazonCognitoIdentity facebook cool', identityId)
     });
@@ -89,9 +91,9 @@ class NavBar extends Component {
 
 }
 
-// // NavBar.contextTypes = {
-// //   store: React.PropTypes.object.isRequired,
-// // }
+NavBar.contextTypes = {
+  store: React.PropTypes.object.isRequired,
+}
 
 // function mapStateToProps(state, ownProps) {
 //     return { main: state.main }

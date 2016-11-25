@@ -57,6 +57,8 @@ export function deleteRepo(objectId, index) {
 
 function getKeywords(subtype) {
 
+   
+
   var identityId = AWS.config.credentials.identityId
     console.log('getKeywords',identityId)
   var docClient = new AWS.DynamoDB.DocumentClient();
@@ -94,6 +96,8 @@ function getKeywords(subtype) {
 
 
   });
+
+  
 
 }
 
