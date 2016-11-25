@@ -6,9 +6,8 @@ import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
-import { addKeyword, loadKeywords } from '../epics/thunks'
 
-class Search extends Component {
+export default class SearchResult extends Component {
 
   constructor(props) {
     super(props);
@@ -18,19 +17,31 @@ class Search extends Component {
     this.handler = this.handler.bind(this)
   }
   handler() {
-    console.log('click')
-  this.props.dispatch(addKeyword(this.state.value))
+     let url = `http://api.bing.com/osjson.aspx?query=clooney`
+   
+  //  let url = `http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+    const settings2 = {
+      url,
+      responseType: 'json'
+    }
+
+    Rx.Observable.ajax(settings2).subscribe(e => {
+      this.setState({ items: e.response })
+      console.log(e)
+    })
+
+    
 
   }
   rows(item, index) {
-    return <div className="list-group-item" key={index}>{item.name} </div>
+    return <div className="list-group-item" key={index}>{item.title} </div>
   }
   render() {
     return <div style={divStyle}>
       <h1 style={{ padding: '5px' }}>Search</h1>
 
       <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
-        {this.props.keywords.map(this.rows)}
+        {this.state.items.map(this.rows)}
       </div>
 
       <div className="input-group">
@@ -45,21 +56,11 @@ class Search extends Component {
   }
 
   componentDidMount() {
-        if (this.props.keywords.length === 0) {
-
-            this.props.dispatch(loadKeywords())
-        }
 
   }
 
 
 }
-
-function mapStateToProps(state, ownProps) {
-    return { keywords: state.keywords }
-}
-
-export default connect(mapStateToProps)(Search)
 
 const divStyle = {
 

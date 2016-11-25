@@ -1,6 +1,7 @@
+/*global AWS, FB*/
 import React, { Component } from 'react';
 // import Foo from '../Foo'
- import { BrowserRouter, Match, Miss, Link } from 'react-router';
+import { BrowserRouter, Match, Miss, Link } from 'react-router';
 // import * as constant from '../common/constants'
 import { connect } from 'react-redux'
 
@@ -23,7 +24,7 @@ class NavBar extends Component {
 
     // }
     // else if (this.props.main.winloaded) {
-     
+
     //   return <div onClick={() => logmein()}>log me in </div>
     // }
     // else {
@@ -51,6 +52,10 @@ class NavBar extends Component {
               <Link className="nav-link" to="/">Home</Link>
 
             </li>
+              <li className="nav-item">
+              <Link className="nav-link" to="/search">Search</Link>
+
+            </li>
             <li className="nav-item">
               <Link className="nav-link" to="/categories">Categories</Link>
 
@@ -58,7 +63,7 @@ class NavBar extends Component {
             <li className="nav-item">
               <a className="nav-link" href="/about">About</a>
             </li>
-       
+
           </ul>
         </div>
 
@@ -67,8 +72,19 @@ class NavBar extends Component {
 
 
   componentDidMount() {
-   
+     AWS.config.region = 'us-east-1';
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'us-east-1:bad8ac29-9ab5-47f2-9b8c-e2514b0eefc0',
 
+    });
+
+    // Obtain AWS credentials
+    AWS.config.credentials.get(function(){
+        // Access AWS resources here.
+          var identityId = AWS.config.credentials.identityId;
+
+  console.log('AmazonCognitoIdentity facebook cool', identityId)
+    });
   }
 
 }
