@@ -5,6 +5,7 @@ import './index.css';
 import NavBar from './components/NavBar'
 import HotTrends from './components/HotTrends'
 import Search from './components/Search'
+import SearchResult from './components/SearchResult'
 import App from './App'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Match, Miss, Link } from 'react-router';
@@ -27,6 +28,7 @@ ReactDOM.render(<Provider store={store} >
  
      <Match exactly pattern="/" component={App} />
       <Match exactly pattern="/search" component={Search} />
+      <Match exactly pattern="/searchResult/:id" component={SearchResult} />
   </div>
    </BrowserRouter >
    </Provider>,

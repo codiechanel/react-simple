@@ -11,7 +11,7 @@ export default class SearchResult extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { items: [], value: '' }
+    this.state = { items: [], value:  props.params.id }
     this.props = props
     this.rows = this.rows.bind(this)
     this.handler = this.handler.bind(this)
@@ -56,6 +56,20 @@ export default class SearchResult extends Component {
   }
 
   componentDidMount() {
+   
+    //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
+   
+   let url = `http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+    const settings2 = {
+      url,
+      responseType: 'json'
+    }
+
+    Rx.Observable.ajax(settings2).subscribe(e => {
+      this.setState({ items: e.response })
+      console.log(e)
+    })
+
 
   }
 
