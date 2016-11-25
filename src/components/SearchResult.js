@@ -28,7 +28,7 @@ export default class SearchResult extends Component {
   handler() {
   //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
    
-    let url = `https://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+    let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
     const settings2 = {
       url,
       responseType: 'json'
@@ -44,7 +44,7 @@ export default class SearchResult extends Component {
   }
   rows(item, index) {
     return <div className="list-group-item" key={index}><p>{item.title}</p> 
-    <a href={item.link}><i href="http://google.com" className="fa fa-external-link" aria-hidden="true"></i></a></div>
+    <a href={item.link} target="_blank"><i  className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
     return <div style={divStyle}>
@@ -69,7 +69,7 @@ export default class SearchResult extends Component {
    
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
    
-   let url = `https://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+   let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
     const settings2 = {
       url,
       responseType: 'json'
