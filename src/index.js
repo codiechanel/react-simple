@@ -49,9 +49,9 @@ ReactDOM.render(<Provider store={store} >
      <Sidebar />
       <div style={{ display: 'flex',flex: 1}}> <Match exactly pattern="/" component={App} />
         <Match exactly pattern="/search" component={Search} />
-        <Match exactly pattern="/searchResult/:id" component={SearchResult} />
+        <Match pattern="/searchResult/:id" component={SearchResult} />
       </div>
-</div>
+    </div>
 
     </div>   
   </BrowserRouter >

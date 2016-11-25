@@ -23,7 +23,7 @@ import { addKeyword, loadKeywords } from '../epics/thunks'
   }
   render() {
     return ( <div style={{
-        padding: '10px',
+      
         width: '25%',
         background: '#f0f0f0'
       }}><div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
