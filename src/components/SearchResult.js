@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
+import moment from 'moment'
 
 const divStyle = {
 
@@ -43,7 +44,10 @@ export default class SearchResult extends Component {
 
   }
   rows(item, index) {
-    return <div className="list-group-item" key={index}><p>{item.title}</p> 
+    let thedate =  moment(item.date).fromNow()
+ //   console.log(thedate.fromNow())
+    return <div className="list-group-item" key={index}><p>{item.title}</p>
+   <p>{thedate}</p>
     <a href={item.link} target="_blank"><i  className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
