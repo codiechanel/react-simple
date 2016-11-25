@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import { BrowserRouter, Match, Miss, Link } from 'react-router';
+// import { BrowserRouter, Match, Miss, Link } from 'react-router';
 // import * as constant from '../common/constants'
-import TopRelated from './TopRelated'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
+
+const divStyle = {
+
+  display: 'flex',
+  // height: '100%',
+  flex: 1,
+  flexDirection: 'column',
+  backgroundColor: '#657687'
+
+}
 
 export default class SearchResult extends Component {
 
@@ -17,9 +26,9 @@ export default class SearchResult extends Component {
     this.handler = this.handler.bind(this)
   }
   handler() {
-     let url = `http://api.bing.com/osjson.aspx?query=clooney`
+  //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
    
-  //  let url = `http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+    let url = `http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
     const settings2 = {
       url,
       responseType: 'json'
@@ -34,7 +43,8 @@ export default class SearchResult extends Component {
 
   }
   rows(item, index) {
-    return <div className="list-group-item" key={index}>{item.title} </div>
+    return <div className="list-group-item" key={index}><p>{item.title}</p> 
+    <a href={item.link}><i href="http://google.com" className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
     return <div style={divStyle}>
@@ -49,7 +59,7 @@ export default class SearchResult extends Component {
           onChange={e => this.setState({ value: e.target.value })}
           className="form-control" placeholder="Search for..." />
         <span className="input-group-btn">
-          <button onClick={this.handler} className="btn btn-secondary" type="button">Quick Add!</button>
+          <button onClick={this.handler} className="btn btn-secondary" type="button">Quick Search!</button>
         </span>
       </div>
     </div>
@@ -76,12 +86,3 @@ export default class SearchResult extends Component {
 
 }
 
-const divStyle = {
-
-  display: 'flex',
-  // height: '100%',
-  flex: 1,
-  flexDirection: 'column',
-  backgroundColor: '#657687'
-
-}

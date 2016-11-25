@@ -1,9 +1,9 @@
 /*global AWS, FB*/
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import { BrowserRouter, Match, Miss, Link } from 'react-router';
+import {  Link } from 'react-router';
 // import * as constant from '../common/constants'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 
 class NavBar extends Component {
 

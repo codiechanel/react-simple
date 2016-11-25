@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import { BrowserRouter, Match, Miss, Link } from 'react-router';
+//import { BrowserRouter, Match, Miss, Link } from 'react-router';
 // import * as constant from '../common/constants'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
 

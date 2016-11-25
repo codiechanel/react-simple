@@ -1,7 +1,7 @@
 /*global AWS, FB*/
 import * as constant from '../common/constants'
-import Rx from 'rxjs/Rx'
-import 'rxjs/add/observable/dom/ajax'
+// import Rx from 'rxjs/Rx'
+// import 'rxjs/add/observable/dom/ajax'
 
 export function loadCategories() {
   console.log('load cat from thunk')

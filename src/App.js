@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Rx from 'rxjs/Rx'
-import 'rxjs/add/observable/dom/ajax'
+// import Rx from 'rxjs/Rx'
+// import 'rxjs/add/observable/dom/ajax'
 
 class App extends Component {
   render() {

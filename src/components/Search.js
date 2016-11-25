@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import { BrowserRouter, Match, Miss, Link } from 'react-router';
+import {  Link } from 'react-router';
 // import * as constant from '../common/constants'
-import TopRelated from './TopRelated'
+// import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
-import Rx from 'rxjs/Rx'
-import 'rxjs/add/observable/dom/ajax'
+// import Rx from 'rxjs/Rx'
+// import 'rxjs/add/observable/dom/ajax'
 import { addKeyword, loadKeywords } from '../epics/thunks'
+
+const divStyle = {
+
+    display: 'flex',
+    // height: '100%',
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#657687'
+
+}
 
 class Search extends Component {
 
@@ -63,12 +73,3 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps)(Search)
 
-const divStyle = {
-
-    display: 'flex',
-    // height: '100%',
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#657687'
-
-}
