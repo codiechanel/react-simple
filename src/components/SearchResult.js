@@ -21,34 +21,67 @@ export default class SearchResult extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { items: [], value:  props.params.id }
+    this.state = { items: [], value: props.params.id }
     this.props = props
     this.rows = this.rows.bind(this)
     this.handler = this.handler.bind(this)
   }
   handler() {
-  //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
-   
-    let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
-    const settings2 = {
-      url,
-      responseType: 'json'
-    }
+    this.performRequest(this.state.value)
+    //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
 
-    Rx.Observable.ajax(settings2).subscribe(e => {
-      this.setState({ items: e.response })
-      console.log(e)
-    })
+    // let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+    // const settings2 = {
+    //   url,
+    //   responseType: 'json'
+    // }
 
-    
+    // Rx.Observable.ajax(settings2).subscribe(e => {
+    //   this.setState({ items: e.response })
+    //   console.log(e)
+    // })
+
+
 
   }
+
+  componentWillUpdate(nextProps, nextState) {
+   
+  }
+
+  performRequest(keyword) {
+//   let url = `http://api.bing.com/osjson.aspx?query=clooney`
+
+      let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${keyword}`
+      const settings2 = {
+        url,
+        responseType: 'json'
+      }
+
+      Rx.Observable.ajax(settings2).subscribe(e => {
+        this.setState({ items: e.response })
+        console.log(e)
+      })
+  }
+  
+
+  componentWillReceiveProps(nextProps) {
+    console.log('wil rc')
+    if (nextProps.params.id !== this.props.params.id) {
+      this.performRequest(nextProps.params.id)
+      
+
+    }
+
+
+  }
+
   rows(item, index) {
-    let thedate =  moment(item.date).fromNow()
- //   console.log(thedate.fromNow())
+    let thedate = moment(item.date).fromNow()
+    //   console.log(thedate.fromNow())
     return <div className="list-group-item" key={index}><p>{item.title}</p>
-   <p>{thedate}</p>
-    <a href={item.link} target="_blank"><i  className="fa fa-external-link" aria-hidden="true"></i></a></div>
+      <p>{thedate}</p>
+      <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
     return <div style={divStyle}>
@@ -70,19 +103,8 @@ export default class SearchResult extends Component {
   }
 
   componentDidMount() {
-   
-    //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
-   
-   let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
-    const settings2 = {
-      url,
-      responseType: 'json'
-    }
 
-    Rx.Observable.ajax(settings2).subscribe(e => {
-      this.setState({ items: e.response })
-      console.log(e)
-    })
+this.performRequest(this.props.params.id)
 
 
   }
