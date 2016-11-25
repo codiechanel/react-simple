@@ -28,7 +28,7 @@ export default class SearchResult extends Component {
   handler() {
   //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
    
-    let url = `http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
+    let url = `https://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
     const settings2 = {
       url,
       responseType: 'json'
