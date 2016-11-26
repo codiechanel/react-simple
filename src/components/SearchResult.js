@@ -70,11 +70,15 @@ export default class SearchResult extends Component {
       <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
+    let items = this.state.items
+     items.sort((a, b) => {
+      return moment(b.date).valueOf() - moment(a.date).valueOf()
+    })
     return <div style={divStyle}>
       <h1 style={{ padding: '5px' }}>Search</h1>
 
       <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
-        {this.state.items.map(this.rows)}
+        {items.map(this.rows)}
       </div>
 
       <div className="input-group">
