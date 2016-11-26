@@ -38,23 +38,32 @@ export default class SearchResult extends Component {
   performRequest(keyword) {
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
 
-    let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${keyword}`
-    const settings2 = {
-      url,
-      responseType: 'json'
+    if (localStorage.getItem(keyword)) {
+      let items = JSON.parse(localStorage.getItem(keyword))
+      this.setState({ items, isLoading: false })
+    }
+    else {
+      let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${keyword}`
+      const settings2 = {
+        url,
+        responseType: 'json'
+      }
+
+      Rx.Observable.ajax(settings2).subscribe(e => {
+        localStorage.setItem(keyword, JSON.stringify(e.response));
+        this.setState({ items: e.response, isLoading: false })
+
+      })
     }
 
-    Rx.Observable.ajax(settings2).subscribe(e => {
-      this.setState({ items: e.response, isLoading: false })
-   
-    })
+
   }
 
 
   componentWillReceiveProps(nextProps) {
-   
+
     if (nextProps.params.id !== this.props.params.id) {
-      this.setState({ value: nextProps.params.id, items: [], isLoading:true })
+      this.setState({ value: nextProps.params.id, items: [], isLoading: true })
       //   this.state.value = nextProps.params.id
       this.performRequest(nextProps.params.id)
 
