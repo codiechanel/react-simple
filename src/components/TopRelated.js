@@ -59,14 +59,19 @@ export default class TopRelated extends Component {
             Rx.Observable.ajax(settings2).subscribe(e => {
                 let items = []
                 let arr = e.response[0]
+                console.log(arr)
                 for (var k in arr) {
                     if (arr.hasOwnProperty(k)) {
                         items.push(k)
                     }
 
                 }
-                if (storageSupport)
-                    localStorage.setItem(key, JSON.stringify(items));
+                if (storageSupport) {
+                   if (items.length !== 0) {
+                      localStorage.setItem(key, JSON.stringify(items));
+                   }
+                }
+                   
                 this.setState({ items })
 
 

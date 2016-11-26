@@ -5,7 +5,6 @@ function MainReducer(state = { winloaded: false, connected: false }, action) {
     case constant.WINDOW_LOADED:
       return Object.assign({}, state, { winloaded: true })
     case constant.AWS_CONNECTED:
-    console.log('connected')
       return Object.assign({}, state, { connected: true })
 
     default:

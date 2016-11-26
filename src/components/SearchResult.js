@@ -51,9 +51,13 @@ export default class SearchResult extends Component {
       }
 
       Rx.Observable.ajax(settings2).subscribe(e => {
-        if (storageSupport)
-          localStorage.setItem(keyword, JSON.stringify(e.response));
-        this.setState({ items: e.response, isLoading: false })
+        let items = e.response
+           if (storageSupport) {
+                   if (items.length !== 0) {
+                      localStorage.setItem(keyword, JSON.stringify(items));
+                   }
+                }
+        this.setState({ items, isLoading: false })
 
       })
     }

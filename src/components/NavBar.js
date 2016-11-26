@@ -88,18 +88,7 @@ class NavBar extends Component {
       // var identityId = AWS.config.credentials.identityId;
 
       this.store.dispatch({ type: constant.AWS_CONNECTED })
-      //   localStorage.setItem("identityId", identityId);
-      if (typeof (Storage) !== "undefined") {
-        // Code for localStorage/sessionStorage.
-        console.log('gg')
-      } else {
-        // Sorry! No Web Storage support..
-        console.log('ss')
-      }
-    //  console.log('identityIjjd', localStorage.getItem("identityId"))
-
-
-    });
+     });
   }
 
 }
