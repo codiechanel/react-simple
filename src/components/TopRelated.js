@@ -6,50 +6,66 @@ import React, { Component } from 'react';
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
 
+const divStyle = {
+
+  display: 'flex',
+  // height: '100%',
+  flex: 1,
+  flexDirection: 'column',
+  backgroundColor: '#657687'
+
+}
+
 export default class TopRelated extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {  items: [] }
+    this.state = { items: [] }
     this.props = props
     this.rows = this.rows.bind(this)
   }
 
   rows(item, index) {
-      return <div key={index}>{item} </div>
+    return <div className="list-group-item" key={index}>{item} </div>
   }
 
-  showRelated() {
- 
-    let keyword = encodeURIComponent(this.props.keyword)
-       console.log('click',keyword)
-     let url = `http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/topRelated?keyword=${keyword}`
+  
+
+  render() {
+    return <div style={divStyle}>
+     <h1 style={{ padding: '5px' }}>Related to {this.props.params.id} </h1>
+      
+     {this.state.items.map(this.rows)}</div>
+  }
+
+  componentDidMount() {
+      let keyword = encodeURIComponent(this.props.params.id)
+   
+    let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/topRelated?keyword=${keyword}`
     const settings2 = {
       url,
       responseType: 'json'
     }
 
     Rx.Observable.ajax(settings2).subscribe(e => {
+      console.log( e)
+
+      let items = []
+      let arr = e.response[0]
+      for (var k in arr) {
+        //  items.push(k)
+
+        if (arr.hasOwnProperty(k)) {
+     
+          items.push(k)
+        }
+
+      }
+      this.setState({ items })
+
     
-
-     let items = []
-     for(var k in e.response[0]) {
-       console.log(k)
-       items.push(k)
-     }
-       this.setState({ items})
-
-      console.log(e.response[0], e)
     })
+
   }
 
-  render() {
-    return <div onClick={e => this.showRelated()}>Show Related
-     {this.state.items.map(this.rows)}</div>
-  }
-
-  componentDidMount() {
-    
-  }
-  
 }

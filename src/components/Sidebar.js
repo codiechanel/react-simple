@@ -2,13 +2,22 @@ import React, { Component } from 'react';
 // import Foo from '../Foo'
 import { Link } from 'react-router';
 // import * as constant from '../common/constants'
-import TopRelated from './TopRelated'
+//import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
-import Rx from 'rxjs/Rx'
-import 'rxjs/add/observable/dom/ajax'
-import { addKeyword, loadKeywords } from '../epics/thunks'
+import {  loadKeywords } from '../epics/thunks'
 
- class Sidebar extends Component {
+
+const divStyle = {
+
+  display: 'flex',
+  // height: '100%',
+  flex: 1,
+  flexDirection: 'column',
+  backgroundColor: '#657687'
+
+}
+
+class Sidebar extends Component {
 
   constructor(props) {
     super(props);
@@ -22,46 +31,44 @@ import { addKeyword, loadKeywords } from '../epics/thunks'
       <Link to={targetLink}> {item.name} </Link></div>
   }
   render() {
-    return ( <div style={{
-      
-        width: '25%',
-        background: '#f0f0f0'
-      }}><div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
-      {this.props.keywords.map(this.rows)}
-    </div></div>)
+    return (<div style={divStyle}>
+    <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
+        {this.props.keywords.map(this.rows)}
+      </div></div>)
 
   }
 
   componentWillReceiveProps(nextProps) {
-     console.log('is con',nextProps,this.props.main.connected)
+
     if (this.props.keywords.length === 0) {
 
       if (nextProps.main.connected) {
- this.props.dispatch(loadKeywords())
+        this.props.dispatch(loadKeywords())
       }
 
-     
+
     }
   }
-  
 
-componentWillUpdate(nextProps, nextState) {
-  
-}
+
+  componentWillUpdate(nextProps, nextState) {
+
+  }
 
 
   componentDidMount() {
-   
+
 
   }
 
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log('map t st')
-  return { 
-    keywords: state.keywords, 
-    main: state.main }
+  
+  return {
+    keywords: state.keywords,
+    main: state.main
+  }
 }
 
 export default connect(mapStateToProps)(Sidebar)

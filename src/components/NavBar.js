@@ -56,6 +56,10 @@ class NavBar extends Component {
               <Link className="nav-link" to="/manageKeywords">Manage Keywords</Link>
 
             </li>
+             <li className="nav-item">
+              <Link className="nav-link" to="/topRelated">Top Related</Link>
+
+            </li>
             <li className="nav-item">
               <Link className="nav-link" to="/categories">Categories</Link>
 
@@ -82,7 +86,10 @@ class NavBar extends Component {
     AWS.config.credentials.get(() => {
         // Access AWS resources here.
           var identityId = AWS.config.credentials.identityId;
+
           this.store.dispatch({type:constant.AWS_CONNECTED})
+          localStorage.setItem("identityId", identityId);
+console.log('identityId',localStorage.getItem("lastname"))
 
 
   console.log('AmazonCognitoIdentity facebook cool', identityId)

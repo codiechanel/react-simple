@@ -4,7 +4,7 @@ import * as constant from '../common/constants'
 // import 'rxjs/add/observable/dom/ajax'
 
 export function loadCategories() {
-  console.log('load cat from thunk')
+ 
   return function (dispatch) {
     return getCategories('facebook').then(
       items => dispatch({ type: constant.CATEGORIES_LOADED, payload: items }),
@@ -14,7 +14,7 @@ export function loadCategories() {
 }
 
 export function loadKeywords() {
-  console.log('load cat from thunk')
+
   return function (dispatch) {
     return getKeywords('trends').then(
       items => dispatch({ type: constant.KEYWORDS_LOADED, payload: items }),
@@ -46,7 +46,7 @@ export function deleteKeyword(objectId, index) {
     return deleteKeywordApi(objectId)
       .then(data => {
         dispatch({ type: constant.KEYWORD_DELETED, objectId })
-        console.log('deletd', data)
+    
       })
   }
 
@@ -58,7 +58,7 @@ export function deleteRepo(objectId, index) {
     return deleteRepoApi(objectId)
       .then(data => {
         dispatch({ type: constant.REPO_DELETED, objectId })
-        console.log('deletd', data)
+
       })
   }
 
@@ -70,7 +70,7 @@ function getKeywords(subtype) {
    
 
   var identityId = AWS.config.credentials.identityId
-    console.log('getKeywords',identityId)
+ 
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: "UserData2",
@@ -202,7 +202,7 @@ function deleteRepoApi(objectId) {
 
 
 function getCategories(subtype) {
-  console.log('getCategories')
+
   var identityId = AWS.config.credentials.identityId
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
