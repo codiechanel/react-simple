@@ -37,8 +37,9 @@ export default class SearchResult extends Component {
 
   performRequest(keyword) {
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
+    let storageSupport = (typeof (Storage) !== "undefined")
 
-    if (localStorage.getItem(keyword)) {
+    if (storageSupport && localStorage.getItem(keyword)) {
       let items = JSON.parse(localStorage.getItem(keyword))
       this.setState({ items, isLoading: false })
     }
@@ -50,7 +51,8 @@ export default class SearchResult extends Component {
       }
 
       Rx.Observable.ajax(settings2).subscribe(e => {
-        localStorage.setItem(keyword, JSON.stringify(e.response));
+        if (storageSupport)
+          localStorage.setItem(keyword, JSON.stringify(e.response));
         this.setState({ items: e.response, isLoading: false })
 
       })

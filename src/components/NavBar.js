@@ -84,19 +84,19 @@ class NavBar extends Component {
 
     // Obtain AWS credentials
     AWS.config.credentials.get(() => {
-        // Access AWS resources here.
-          var identityId = AWS.config.credentials.identityId;
+      // Access AWS resources here.
+      // var identityId = AWS.config.credentials.identityId;
 
-          this.store.dispatch({type:constant.AWS_CONNECTED})
-       //   localStorage.setItem("identityId", identityId);
-          if (typeof(Storage) !== "undefined") {
-    // Code for localStorage/sessionStorage.
-    console.log('gg')
-} else {
-    // Sorry! No Web Storage support..
-    console.log('ss')
-}
-console.log('identityIjjd',localStorage.getItem("identityId"))
+      this.store.dispatch({ type: constant.AWS_CONNECTED })
+      //   localStorage.setItem("identityId", identityId);
+      if (typeof (Storage) !== "undefined") {
+        // Code for localStorage/sessionStorage.
+        console.log('gg')
+      } else {
+        // Sorry! No Web Storage support..
+        console.log('ss')
+      }
+    //  console.log('identityIjjd', localStorage.getItem("identityId"))
 
 
     });
