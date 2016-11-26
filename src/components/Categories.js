@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import * as constant from '../common/constants'
+//import * as constant from '../common/constants'
 
-import { Match, Miss, Link } from 'react-router';
+import {  Link } from 'react-router';
 import { connect } from 'react-redux'
 import { loadCategories, addCategory } from '../epics/thunks'
 class Categories extends Component {

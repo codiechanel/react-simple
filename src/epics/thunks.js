@@ -137,10 +137,7 @@ function deleteKeywordApi(objectId) {
 
 
 function updateKeywordApi(item) {
-  var identityId = AWS.config.credentials.identityId;
-
   var docClient = new AWS.DynamoDB.DocumentClient();
-
   var table = "UserData2";
 
   var params = {
@@ -166,8 +163,6 @@ function updateKeywordApi(item) {
 }
 
 function addKeywordApi(name, project) {
-
-
   var identityId = AWS.config.credentials.identityId;
 
   var docClient = new AWS.DynamoDB.DocumentClient();

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 // import * as constant from '../common/constants'
 //import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
-import { loadKeywords, loadCategories } from '../epics/thunks'
+import {  loadCategories } from '../epics/thunks'
 
 
 const divStyle = {

@@ -47,7 +47,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 ReactDOM.render(<Provider store={store} >
   <BrowserRouter >
 
-    <div style={{ display: 'flex', flex: 1, height: '100%', backgroundColor: '#050600', flexDirection: 'column' }} >
+    <div style={{ display: 'flex', flex: 1, height: '100%', flexDirection: 'column' }} >
       <NavBar />
       <div style={{ display: 'flex', flex: 1 }}>
         <div style={{ display: 'flex', flex: .30 }}>

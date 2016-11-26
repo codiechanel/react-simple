@@ -38,7 +38,6 @@ class ManageKeywords extends Component {
     }
     rows(item, index) {
         let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
-        let editLink = `/edit/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
             <Link to={targetLink}> {item.name} </Link>
             <i onClick={e => this.delete(item.objectId, index)} className="fa fa-trash" aria-hidden="true"></i>

@@ -14,7 +14,7 @@ export default class EditKeyword extends Component {
   }
 
   options(item, index) {
-    return <option value={item.name}>{item.name}</option>
+    return <option key={index} value={item.name}>{item.name}</option>
   }
 
   save() {
@@ -29,16 +29,17 @@ export default class EditKeyword extends Component {
 
   render() {
     let categories = this.store.getState().categories
-    return <div>
-     <div className="form-group">
-        <label htmlFor="exampleSelect1">Example select</label>
+    return <div style={{display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center'  }}>
+     <div  style={{ }} >
+        <label  htmlFor="exampleSelect1">{this.props.location.state.name}</label>
         <select ref={(c) => { this.select = c; }} 
         className="form-control" id="exampleSelect1">
           {categories.map(this.options)}
         </select>
-      </div>
-      <button onClick={e => this.save()} type="button" className="btn btn-primary">Save</button>
+         <button onClick={e => this.save()} type="button" className="btn btn-primary">Save</button>
 
+      </div>
+     
     </div>
   }
 
