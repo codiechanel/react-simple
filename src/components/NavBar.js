@@ -1,14 +1,14 @@
 /*global AWS, FB*/
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import {  Link } from 'react-router';
- import * as constant from '../common/constants'
+import { Link } from 'react-router';
+import * as constant from '../common/constants'
 // import { connect } from 'react-redux'
 
 class NavBar extends Component {
 
-  constructor(props,ctx) {
-    super(props,ctx);
+  constructor(props, ctx) {
+    super(props, ctx);
     //    console.log(ctx)
     this.props = props
     // this.state = { status: 'Connecting...' }
@@ -88,11 +88,17 @@ class NavBar extends Component {
           var identityId = AWS.config.credentials.identityId;
 
           this.store.dispatch({type:constant.AWS_CONNECTED})
-          localStorage.setItem("identityId", identityId);
-console.log('identityId',localStorage.getItem("lastname"))
+       //   localStorage.setItem("identityId", identityId);
+          if (typeof(Storage) !== "undefined") {
+    // Code for localStorage/sessionStorage.
+    console.log('gg')
+} else {
+    // Sorry! No Web Storage support..
+    console.log('ss')
+}
+console.log('identityIjjd',localStorage.getItem("identityId"))
 
 
-  console.log('AmazonCognitoIdentity facebook cool', identityId)
     });
   }
 

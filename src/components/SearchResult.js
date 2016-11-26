@@ -46,13 +46,13 @@ export default class SearchResult extends Component {
 
     Rx.Observable.ajax(settings2).subscribe(e => {
       this.setState({ items: e.response, isLoading: false })
-      console.log(e)
+   
     })
   }
 
 
   componentWillReceiveProps(nextProps) {
-    console.log('wil rc')
+   
     if (nextProps.params.id !== this.props.params.id) {
       this.setState({ value: nextProps.params.id, items: [], isLoading:true })
       //   this.state.value = nextProps.params.id
