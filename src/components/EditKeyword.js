@@ -8,8 +8,6 @@ export default class EditKeyword extends Component {
     this.state = { items: [] }
     this.props = props
     this.store = ctx.store
-
-    console.log(this.props, ctx.store.getState().categories)
     this.options = this.options.bind(this)
   }
 
@@ -18,11 +16,8 @@ export default class EditKeyword extends Component {
   }
 
   save() {
- //  let item = this.props.location.state
     let value =  this.select.options[this.select.selectedIndex].value
     let item = Object.assign({}, this.props.location.state, {  category: value })
-    console.log(item, this.select.selectedIndex)
-
    this.store.dispatch(updateKeyword(item))
 
   }
