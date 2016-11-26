@@ -22,14 +22,14 @@ class Keywords extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { items: [], value: '' }
+        this.state = { items: [] }
         this.props = props
         this.rows = this.rows.bind(this)
         this.handler = this.handler.bind(this)
     }
     handler() {
-        console.log('click')
-        this.props.dispatch(addKeyword(this.state.value))
+        console.log('click', this.input.value)
+        this.props.dispatch(addKeyword(this.input.value, this.props.params.id))
 
     }
     delete(id, index) {
@@ -44,16 +44,22 @@ class Keywords extends Component {
         </div>
     }
     render() {
+       
+         
+       let keywords = this.props.keywords.filter(item => {
+        //    console.log(item.category,this.props.params.id)
+            return (item.category === this.props.params.id)
+        })
         return <div style={divStyle}>
-            <h1 style={{ padding: '5px' }}>Search</h1>
+            <h1 style={{ padding: '5px' }}>{this.props.params.id}</h1>
 
             <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
-                {this.props.keywords.map(this.rows)}
+                {keywords.map(this.rows)}
             </div>
 
             <div className="input-group">
-                <input value={this.state.value} type="text"
-                    onChange={e => this.setState({ value: e.target.value })}
+                <input ref={c => this.input = c} type="text"
+                   
                     className="form-control" placeholder="Search for..." />
                 <span className="input-group-btn">
                     <button onClick={this.handler} className="btn btn-secondary" type="button">Quick Add!</button>
@@ -63,6 +69,7 @@ class Keywords extends Component {
     }
 
     componentDidMount() {
+       
         if (this.props.keywords.length === 0) {
 
             this.props.dispatch(loadKeywords())

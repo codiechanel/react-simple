@@ -32,9 +32,9 @@ export function updateKeyword(item) {
   };
 }
 
-export function addKeyword(keyword) {
+export function addKeyword(keyword, category) {
   return function (dispatch) {
-    return addKeywordApi(keyword,'trends').then(
+    return addKeywordApi(keyword,category).then(
       item => dispatch({ type: constant.KEYWORD_ADDED, payload: item }),
       err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
     );
@@ -162,7 +162,7 @@ function updateKeywordApi(item) {
 
 }
 
-function addKeywordApi(name, project) {
+function addKeywordApi(name, category = 'Others') {
   var identityId = AWS.config.credentials.identityId;
 
   var docClient = new AWS.DynamoDB.DocumentClient();
@@ -182,7 +182,8 @@ function addKeywordApi(name, project) {
       "objectId": objectId,
       "type": 'keyword',
       name,
-      project     
+      category,
+      project: 'trends'     
 
     },
     ReturnConsumedCapacity: "TOTAL"

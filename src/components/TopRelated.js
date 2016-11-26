@@ -50,7 +50,7 @@ export default class TopRelated extends Component {
             this.setState({ items })
         }
         else {
-            let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/topRelated?keyword=${keyword}`
+            let url = `https://037945b8-0ee0-4-231-b9ee.azurewebsites.net/topRelated?keyword=${keyword}`
             const settings2 = {
                 url,
                 responseType: 'json'

@@ -10,6 +10,7 @@ import SearchResult from './components/SearchResult'
 import TopRelated from './components/TopRelated'
 import Categories from './components/Categories'
 import EditKeyword from './components/EditKeyword'
+import Keywords from './components/Keywords'
 import App from './App'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Match } from 'react-router';
@@ -55,7 +56,8 @@ ReactDOM.render(<Provider store={store} >
         </div>
         <div style={{ display: 'flex', flex: 1 }}>
           <Match exactly pattern="/" component={App} />
-             <Match exactly pattern="/categories" component={Categories} />
+          <Match exactly pattern="/categories" component={Categories} />
+          <Match exactly pattern="/keywords/:id" component={Keywords} />
           <Match exactly pattern="/manageKeywords" component={ManageKeywords} />
           <Match pattern="/topRelated/:id" component={TopRelated} />
           <Match pattern="/edit" component={EditKeyword} />

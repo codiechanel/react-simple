@@ -26,7 +26,7 @@ class Sidebar extends Component {
         this.rows = this.rows.bind(this)
     }
     rows(item, index) {
-        let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
+        let targetLink = `/keywords/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
             <Link to={targetLink}> {item.name} </Link></div>
     }
