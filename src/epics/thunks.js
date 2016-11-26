@@ -41,6 +41,16 @@ export function addCategory(category) {
   };
 }
 
+export function deleteKeyword(objectId, index) {
+  return function (dispatch) {
+    return deleteKeywordApi(objectId)
+      .then(data => {
+        dispatch({ type: constant.KEYWORD_DELETED, objectId })
+        console.log('deletd', data)
+      })
+  }
+
+}
 
 
 export function deleteRepo(objectId, index) {
@@ -102,6 +112,25 @@ function getKeywords(subtype) {
 }
 
 
+function deleteKeywordApi(objectId) {
+  var identityId = AWS.config.credentials.identityId;
+
+  var docClient = new AWS.DynamoDB.DocumentClient();
+
+  var table = "UserData2";
+  var params = {
+    TableName: table,
+    Key: {
+      "userId": identityId,
+      "objectId": objectId,
+    },
+    ReturnConsumedCapacity: "TOTAL"
+  };
+
+  return docClient.delete(params).promise()
+}
+
+
 
 function addKeywordApi(name, subtype) {
 
@@ -137,7 +166,7 @@ function addKeywordApi(name, subtype) {
         // console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         reject(err)
       } else {
-        // this.props.dispatch({ type: constant.CATEGORY_ADDED, payload: params.Item })
+ 
         resolve(params.Item)
       }
     });
@@ -168,20 +197,6 @@ function deleteRepoApi(objectId) {
   };
 
   return docClient.delete(params).promise()
-
-  // return new Promise(function (resolve, reject) {
-  //   docClient.put(params, (err, data, y) => {
-  //     if (err) {
-  //       revoke(err)
-  //     } else {
-
-  //       resolve(params.Item)
-  //     }
-  //   });
-
-  // })
-
-
 }
 
 

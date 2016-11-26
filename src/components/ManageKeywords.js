@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import {  Link } from 'react-router';
+import { Link } from 'react-router';
 // import * as constant from '../common/constants'
 // import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
 // import Rx from 'rxjs/Rx'
 // import 'rxjs/add/observable/dom/ajax'
-import { addKeyword, loadKeywords } from '../epics/thunks'
+import { addKeyword, loadKeywords, deleteKeyword } from '../epics/thunks'
 
 const divStyle = {
 
@@ -18,7 +18,7 @@ const divStyle = {
 
 }
 
-class Search extends Component {
+class ManageKeywords extends Component {
 
     constructor(props) {
         super(props);
@@ -32,10 +32,16 @@ class Search extends Component {
         this.props.dispatch(addKeyword(this.state.value))
 
     }
+    delete(id, index) {
+        console.log('click', id)
+        this.props.dispatch(deleteKeyword(id, index))
+    }
     rows(item, index) {
-       let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
+        let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
-           <Link to={targetLink}> {item.name} </Link></div>
+            <Link to={targetLink}> {item.name} </Link>
+            <i onClick={e => this.delete(item.objectId, index)} className="fa fa-trash" aria-hidden="true"></i>
+        </div>
     }
     render() {
         return <div style={divStyle}>
@@ -71,5 +77,5 @@ function mapStateToProps(state, ownProps) {
     return { keywords: state.keywords }
 }
 
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps)(ManageKeywords)
 

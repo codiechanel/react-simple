@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import NavBar from './components/NavBar'
 // import HotTrends from './components/HotTrends'
-import Search from './components/Search'
+import ManageKeywords from './components/ManageKeywords'
 import Sidebar from './components/Sidebar'
 import SearchResult from './components/SearchResult'
 import App from './App'
@@ -48,7 +48,7 @@ ReactDOM.render(<Provider store={store} >
       <div style={{ display: 'flex',height: '100%'}}>
      <Sidebar />
       <div style={{ display: 'flex',flex: 1}}> <Match exactly pattern="/" component={App} />
-        <Match exactly pattern="/search" component={Search} />
+        <Match exactly pattern="/manageKeywords" component={ManageKeywords} />
         <Match pattern="/searchResult/:id" component={SearchResult} />
       </div>
     </div>
