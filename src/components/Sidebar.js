@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 // import * as constant from '../common/constants'
 //import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
-import { loadKeywords } from '../epics/thunks'
+import { loadKeywords, loadCategories } from '../epics/thunks'
 
 
 const divStyle = {
@@ -38,8 +38,8 @@ class Sidebar extends Component {
         })
     }
     render() {
-        let keywords = this.props.keywords
-        this.sort(keywords)
+        let keywords = this.props.categories
+     //   this.sort(keywords)
 
         return (<div style={divStyle}>
             <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
@@ -50,10 +50,10 @@ class Sidebar extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (this.props.keywords.length === 0) {
+        if (this.props.categories.length === 0) {
 
             if (nextProps.main.connected) {
-                this.props.dispatch(loadKeywords())
+                this.props.dispatch(loadCategories())
             }
 
 
@@ -77,7 +77,8 @@ function mapStateToProps(state, ownProps) {
 
     return {
         keywords: state.keywords,
-        main: state.main
+        main: state.main,
+        categories: state.categories
     }
 }
 

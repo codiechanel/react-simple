@@ -8,8 +8,11 @@ function KeywordsReducer(state = [], action) {
       return [...state, action.payload]
      //  return Object.assign({}, state, {  action: action.type })
     case constant.KEYWORD_DELETED:
-    console.log('keyword bein dlt')
-      return state.filter(item => item.objectId !== action.objectId);
+   
+      return state.filter(item => item.objectId !== action.objectId)
+      case constant.KEYWORD_UPDATED:
+       console.log('keyword updated')
+      return state
 
     default:
       return state

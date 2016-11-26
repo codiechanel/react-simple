@@ -6,7 +6,7 @@ import * as constant from '../common/constants'
 export function loadCategories() {
  
   return function (dispatch) {
-    return getCategories('facebook').then(
+    return getCategories('trends').then(
       items => dispatch({ type: constant.CATEGORIES_LOADED, payload: items }),
       err => console.error("Unable to query. Error:", JSON.stringify(err, null, 2))
     );
@@ -23,9 +23,18 @@ export function loadKeywords() {
   };
 }
 
-export function addKeyword(category) {
+export function updateKeyword(item) {
   return function (dispatch) {
-    return addKeywordApi(category,'trends').then(
+    return updateKeywordApi(item).then(
+      item => dispatch({ type: constant.KEYWORD_UPDATED, payload: item }),
+      err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
+    );
+  };
+}
+
+export function addKeyword(keyword) {
+  return function (dispatch) {
+    return addKeywordApi(keyword,'trends').then(
       item => dispatch({ type: constant.KEYWORD_ADDED, payload: item }),
       err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
     );
@@ -34,7 +43,7 @@ export function addKeyword(category) {
 
 export function addCategory(category) {
   return function (dispatch) {
-    return addCategoryApi(category, 'facebook').then(
+    return addCategoryApi(category, 'trends').then(
       item => dispatch({ type: constant.CATEGORY_ADDED, payload: item }),
       err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
     );
@@ -65,29 +74,25 @@ export function deleteRepo(objectId, index) {
 }
 
 
-function getKeywords(subtype) {
-
-   
-
+function getKeywords(project) {
   var identityId = AWS.config.credentials.identityId
  
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: "UserData2",
     IndexName: "userId-type-index",
-    FilterExpression: '#subtype = :subtype',
-    // ProjectionExpression: "#yr, title, info.genres, info.actors[0]",
+    FilterExpression: '#project = :project',
     KeyConditionExpression: "#userId = :userId and #type = :type",
     ExpressionAttributeNames: {
       "#userId": "userId",
       "#type": "type",
-       "#subtype": "subtype"
+       "#project": "project"
       
     },
     ExpressionAttributeValues: {
       ":userId": identityId,
       ":type":  'keyword',
-       ":subtype": subtype,
+       ":project": project,
        
     }
   };
@@ -131,8 +136,36 @@ function deleteKeywordApi(objectId) {
 }
 
 
+function updateKeywordApi(item) {
+  var identityId = AWS.config.credentials.identityId;
 
-function addKeywordApi(name, subtype) {
+  var docClient = new AWS.DynamoDB.DocumentClient();
+
+  var table = "UserData2";
+
+  var params = {
+    TableName: table,
+    Item: item,
+    ReturnConsumedCapacity: "TOTAL"
+  };
+
+  return new Promise(function (resolve, reject) {
+    docClient.put(params, (err, data, y) => {
+      if (err) {
+        // console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        reject(err)
+      } else {
+ 
+        resolve(params.Item)
+      }
+    });
+
+  })
+
+
+}
+
+function addKeywordApi(name, project) {
 
 
   var identityId = AWS.config.credentials.identityId;
@@ -154,7 +187,7 @@ function addKeywordApi(name, subtype) {
       "objectId": objectId,
       "type": 'keyword',
       name,
-      subtype     
+      project     
 
     },
     ReturnConsumedCapacity: "TOTAL"
@@ -201,25 +234,25 @@ function deleteRepoApi(objectId) {
 
 
 
-function getCategories(subtype) {
+function getCategories(project) {
 
   var identityId = AWS.config.credentials.identityId
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: "UserData2",
     IndexName: "userId-type-index",
-    FilterExpression: '#subtype = :subtype',
+    FilterExpression: '#project = :project',
     // ProjectionExpression: "#yr, title, info.genres, info.actors[0]",
     KeyConditionExpression: "#userId = :userId and #type = :type",
     ExpressionAttributeNames: {
       "#userId": "userId",
       "#type": "type",
-       "#subtype": "subtype"
+       "#project": "project"
     },
     ExpressionAttributeValues: {
       ":userId": identityId,
       ":type": "category",
-       ":subtype": subtype,
+       ":project": project,
     }
   };
 
@@ -239,7 +272,7 @@ function getCategories(subtype) {
 
 }
 
-function addCategoryApi(category, subtype) {
+function addCategoryApi(category, project) {
 
 
   var identityId = AWS.config.credentials.identityId;
@@ -261,7 +294,7 @@ function addCategoryApi(category, subtype) {
       "objectId": objectId,
       "type": 'category',
       "name": category,
-      subtype
+      project
 
     },
     ReturnConsumedCapacity: "TOTAL"

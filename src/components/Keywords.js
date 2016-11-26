@@ -18,7 +18,7 @@ const divStyle = {
 
 }
 
-class ManageKeywords extends Component {
+class Keywords extends Component {
 
     constructor(props) {
         super(props);
@@ -38,11 +38,9 @@ class ManageKeywords extends Component {
     }
     rows(item, index) {
         let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
-        let editLink = `/edit/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
             <Link to={targetLink}> {item.name} </Link>
             <i onClick={e => this.delete(item.objectId, index)} className="fa fa-trash" aria-hidden="true"></i>
-            <Link to={{ pathname: '/edit', state: item }}><i  className="fa fa-edit" aria-hidden="true"></i></Link>
         </div>
     }
     render() {
@@ -79,5 +77,5 @@ function mapStateToProps(state, ownProps) {
     return { keywords: state.keywords }
 }
 
-export default connect(mapStateToProps)(ManageKeywords)
+export default connect(mapStateToProps)(Keywords)
 

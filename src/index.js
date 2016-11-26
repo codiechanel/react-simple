@@ -8,6 +8,8 @@ import ManageKeywords from './components/ManageKeywords'
 import Sidebar from './components/Sidebar'
 import SearchResult from './components/SearchResult'
 import TopRelated from './components/TopRelated'
+import Categories from './components/Categories'
+import EditKeyword from './components/EditKeyword'
 import App from './App'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Match } from 'react-router';
@@ -16,9 +18,10 @@ import thunk from 'redux-thunk'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import keywords from './reducers/KeywordsReducer';
 import main from './reducers/MainReducer';
+import categories from './reducers/CategoriesReducer';
 
 const rootReducer = combineReducers({
-  keywords, main
+  keywords, main, categories
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -52,8 +55,10 @@ ReactDOM.render(<Provider store={store} >
         </div>
         <div style={{ display: 'flex', flex: 1 }}>
           <Match exactly pattern="/" component={App} />
+             <Match exactly pattern="/categories" component={Categories} />
           <Match exactly pattern="/manageKeywords" component={ManageKeywords} />
-          <Match exactly pattern="/topRelated/:id" component={TopRelated} />
+          <Match pattern="/topRelated/:id" component={TopRelated} />
+          <Match pattern="/edit" component={EditKeyword} />
           <Match pattern="/searchResult/:id" component={SearchResult} />
         </div>
       </div>
