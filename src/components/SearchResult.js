@@ -28,22 +28,7 @@ export default class SearchResult extends Component {
   }
   handler() {
     this.performRequest(this.state.value)
-    //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
-
-    // let url = `https://60be0d5f-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${this.state.value}`
-    // const settings2 = {
-    //   url,
-    //   responseType: 'json'
-    // }
-
-    // Rx.Observable.ajax(settings2).subscribe(e => {
-    //   this.setState({ items: e.response })
-    //   console.log(e)
-    // })
-
-
-
-  }
+    }
 
   componentWillUpdate(nextProps, nextState) {
    
@@ -68,6 +53,7 @@ export default class SearchResult extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('wil rc')
     if (nextProps.params.id !== this.props.params.id) {
+      this.state.value = nextProps.params.id
       this.performRequest(nextProps.params.id)
       
 
@@ -80,7 +66,7 @@ export default class SearchResult extends Component {
     let thedate = moment(item.date).fromNow()
     //   console.log(thedate.fromNow())
     return <div className="list-group-item" key={index}><p>{item.title}</p>
-      <p>{thedate}</p>
+      <p className="text-muted">{thedate}</p>
       <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
