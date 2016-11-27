@@ -29,7 +29,7 @@ const titleStyle = {
   color: 'white',
   fontSize: '1.5rem',
   fontWeight: 'bold',
-  fontFamily: 'Lato'
+  // fontFamily: 'Lato'
   // 'Montserrat'
   // 'Nunito'
 
@@ -39,7 +39,8 @@ const titleStyle = {
 const footerStyle = {
 
   display: 'flex',
-  padding: '5px',
+  paddingLeft: '15px',
+  paddingTop: '5px',
   // flexDirection: 'column',
   backgroundColor: 'rgba(0,0,0,.1)',
   borderRadius: '0px 0px 15px 15px',
@@ -137,17 +138,26 @@ export default class SearchResult extends Component {
   rows(item, index) {
     let thedate = moment(item.date).fromNow()
     //   console.log(thedate.fromNow())
+
+    let start = item.title.lastIndexOf(" - ")
+    let source = item.title.substring(start, item.title.length)
+    let title = item.title.replace(source, "")
     return <div style={rowStyle} key={index}>
       <div style={headerStyle}>
-        <div style={titleStyle}>{item.title}</div>
+        <div style={titleStyle}>{title}</div>
         <div className="text-muted">{thedate}</div>
 
       </div>
       <div style={footerStyle}>
-        <div>
+
+        <div style={{
+          color: '#FFA000',
+          fontWeight: 'bold',
+          paddingRight: '5px'
+        }}>{source}</div>
+        <div style={{paddingRight: '5px'}}>
           <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
-        <div>hello</div>
       </div>
     </div>
   }
