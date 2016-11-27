@@ -26,22 +26,41 @@ const faStyle = {
 }
 
 const titleStyle = {
-   color: 'white',
-  fontSize : '1.5rem',
- fontWeight: 'bold',
- fontFamily: 'Lato'
+  color: 'white',
+  fontSize: '1.5rem',
+  fontWeight: 'bold',
+  fontFamily: 'Lato'
   // 'Montserrat'
   // 'Nunito'
 
 }
 
-const rowStyle = {
- backgroundColor: '#303F9F',
- padding: '15px',
 
+const footerStyle = {
+
+  display: 'flex',
+  padding: '5px',
+  // flexDirection: 'column',
+  backgroundColor: 'rgba(0,0,0,.1)',
+  borderRadius: '0px 0px 15px 15px',
+  // justifyContent: 'flex-end'
+}
+
+const headerStyle = {
+  paddingTop: '15px',
+  paddingLeft: '15px',
+  paddingRight: '15px',
+}
+
+const rowStyle = {
+  backgroundColor: '#303F9F',
+  justifyContent: 'space-between',
+
+  display: 'flex',
+  flexDirection: 'column',
   margin: '5px',
- flex: '45%',
- borderRadius: '15px'
+  flex: '45%',
+  borderRadius: '15px'
 
 }
 
@@ -60,7 +79,7 @@ export default class SearchResult extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    
+
   }
 
   performRequest(keyword, refresh = false) {
@@ -95,7 +114,7 @@ export default class SearchResult extends Component {
 
 
   componentWillReceiveProps(nextProps) {
- 
+
 
     if (nextProps.params.id !== this.props.params.id) {
       this.setState({ value: nextProps.params.id, items: [], isLoading: true })
@@ -118,10 +137,19 @@ export default class SearchResult extends Component {
   rows(item, index) {
     let thedate = moment(item.date).fromNow()
     //   console.log(thedate.fromNow())
-    return <div  style={rowStyle}  key={index}>
-    <div style={titleStyle}>{item.title}</div>
-      <p className="text-muted">{thedate}</p>
-      <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a></div>
+    return <div style={rowStyle} key={index}>
+      <div style={headerStyle}>
+        <div style={titleStyle}>{item.title}</div>
+        <div className="text-muted">{thedate}</div>
+
+      </div>
+      <div style={footerStyle}>
+        <div>
+          <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a>
+        </div>
+        <div>hello</div>
+      </div>
+    </div>
   }
   render() {
     if (this.state.isLoading) {
@@ -139,10 +167,10 @@ export default class SearchResult extends Component {
           <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
           <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
           <i style={faStyle} className="fa fa-star" aria-hidden="true"></i>
-   
+
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection:'row', flex: 1, overflow: 'scroll' }} className="list-group">
+        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', flex: 1, overflow: 'scroll' }} className="list-group">
           {items.map(this.rows)}
         </div>
 
