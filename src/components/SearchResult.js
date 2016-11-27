@@ -18,6 +18,12 @@ const divStyle = {
 
 }
 
+const faStyle = {
+  fontSize: '1.3rem',
+  padding: '5px',
+
+}
+
 export default class SearchResult extends Component {
 
   constructor(props) {
@@ -32,14 +38,14 @@ export default class SearchResult extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-
+    
   }
 
-  performRequest(keyword) {
+  performRequest(keyword, refresh = false) {
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
     let storageSupport = (typeof (Storage) !== "undefined")
 
-    if (storageSupport && localStorage.getItem(keyword)) {
+    if (!refresh && storageSupport && localStorage.getItem(keyword)) {
       let items = JSON.parse(localStorage.getItem(keyword))
       this.setState({ items, isLoading: false })
     }
@@ -52,11 +58,11 @@ export default class SearchResult extends Component {
 
       Rx.Observable.ajax(settings2).subscribe(e => {
         let items = e.response
-           if (storageSupport) {
-                   if (items.length !== 0) {
-                      localStorage.setItem(keyword, JSON.stringify(items));
-                   }
-                }
+        if (storageSupport) {
+          if (items.length !== 0) {
+            localStorage.setItem(keyword, JSON.stringify(items));
+          }
+        }
         this.setState({ items, isLoading: false })
 
       })
@@ -67,6 +73,7 @@ export default class SearchResult extends Component {
 
 
   componentWillReceiveProps(nextProps) {
+ 
 
     if (nextProps.params.id !== this.props.params.id) {
       this.setState({ value: nextProps.params.id, items: [], isLoading: true })
@@ -79,6 +86,13 @@ export default class SearchResult extends Component {
 
   }
 
+  refresh() {
+
+
+    this.setState({ isLoading: true })
+    this.performRequest(this.props.params.id, true)
+  }
+
   rows(item, index) {
     let thedate = moment(item.date).fromNow()
     //   console.log(thedate.fromNow())
@@ -87,18 +101,21 @@ export default class SearchResult extends Component {
       <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
   render() {
-    let items = this.state.items
-    items.sort((a, b) => {
-      return moment(b.date).valueOf() - moment(a.date).valueOf()
-    })
-    let targetLink = `/topRelated/${this.props.params.id}`
     if (this.state.isLoading) {
-      return <Spinner />
+      return <div style={divStyle}><Spinner /></div>
     }
     else {
+      let items = this.state.items
+      items.sort((a, b) => {
+        return moment(b.date).valueOf() - moment(a.date).valueOf()
+      })
+      let targetLink = `/topRelated/${this.props.params.id}`
       return <div style={divStyle}>
-        <h1 style={{ padding: '5px' }}>{this.state.value}  <Link to={targetLink}> <i className="fa fa-trophy" aria-hidden="true"></i></Link></h1>
-
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <h1 style={{ padding: '5px' }}>{this.state.value}  </h1>
+          <Link to={targetLink}> <i style={faStyle} className="fa fa-trophy" aria-hidden="true"></i></Link>
+          <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
+        </div>
 
         <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
           {items.map(this.rows)}
