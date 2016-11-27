@@ -51,9 +51,10 @@ const footerStyle = {
 }
 
 const headerStyle = {
-  paddingTop: '15px',
-  paddingLeft: '15px',
-  paddingRight: '15px',
+  // paddingTop: '15px',
+  // paddingLeft: '15px',
+  // paddingRight: '15px',
+  padding: '15px'
 }
 
 const rowStyle = {
@@ -155,7 +156,7 @@ export default class SearchResult extends Component {
     return <div style={rowNewStyle} key={index}>
       <div style={headerStyle}>
         <div style={titleStyle}>{title}</div>
-        <div className="text-muted">{thedate}</div>
+        <div style={{color : 'black'}}>{thedate}</div>
 
       </div>
       <div style={footerStyle}>
@@ -165,8 +166,8 @@ export default class SearchResult extends Component {
           fontWeight: 'bold',
           paddingRight: '5px'
         }}>{source}</div>
-        <div style={{ paddingRight: '5px' }}>
-          <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a>
+        <div style={{ paddingRight: '5px', color : 'white' }}>
+          <a href={item.link} target="_blank"><i style={{  color : 'white' }} className="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
       </div>
     </div>
