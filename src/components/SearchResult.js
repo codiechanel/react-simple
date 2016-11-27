@@ -57,7 +57,7 @@ const headerStyle = {
 }
 
 const rowStyle = {
-  backgroundColor: '#303F9F',
+  // backgroundColor: '#303F9F',
   justifyContent: 'space-between',
 
   display: 'flex',
@@ -149,8 +149,10 @@ export default class SearchResult extends Component {
     let start = item.title.lastIndexOf(" - ")
     let source = item.title.substring(start, item.title.length)
     let title = item.title.replace(source, "")
-
-    return <div style={rowStyle} key={index}>
+// backgroundColor: '#303F9F',
+    let colors = ['#303F9F','#3F51B5','#448AFF','#388E3C','#8BC34A','#4CAF50','#455A64','#607D8B','#9E9E9E','#00796B']
+  let  rowNewStyle = Object.assign({}, rowStyle,{ backgroundColor: colors[index]})
+    return <div style={rowNewStyle} key={index}>
       <div style={headerStyle}>
         <div style={titleStyle}>{title}</div>
         <div className="text-muted">{thedate}</div>
