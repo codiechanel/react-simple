@@ -39,14 +39,14 @@ class ManageKeywords extends Component {
     rows(item, index) {
         let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
-            <Link to={targetLink}> {item.name} </Link> <span className="tag tag-pill tag-primary">{item.category}</span>
+            <Link to={{ pathname: targetLink, state: item }}> {item.name} </Link> <span className="tag tag-pill tag-primary">{item.category}</span>
             <i onClick={e => this.delete(item.objectId, index)} className="fa fa-trash" aria-hidden="true"></i>
             <Link to={{ pathname: '/edit', state: item }}><i  className="fa fa-edit" aria-hidden="true"></i></Link>
         </div>
     }
     render() {
         return <div style={divStyle}>
-            <h1 style={{ padding: '5px' }}>Search</h1>
+            <h1 style={{ padding: '5px' }}>Manage Keywords</h1>
 
             <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
                 {this.props.keywords.map(this.rows)}

@@ -45,6 +45,8 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 //   }
 // ]
 
+// localStorage.clear()
+
 ReactDOM.render(<Provider store={store} >
   <BrowserRouter >
 

@@ -36,7 +36,7 @@ class Keywords extends Component {
     rows(item, index) {
         let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
-            <Link to={targetLink}> {item.name} </Link>
+            <Link to={{ pathname: targetLink, state: item }}> {item.name} </Link>
         </div>
     }
     render() {

@@ -7,11 +7,13 @@ import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
 import moment from 'moment'
 import Spinner from 'react-spinner'
+import { addFavorite } from '../epics/thunks'
 
 const divStyle = {
 
   display: 'flex',
   // height: '100%',
+
   flex: 1,
   flexDirection: 'column',
   backgroundColor: '#657687'
@@ -20,10 +22,11 @@ const divStyle = {
 
 const faStyle = {
   fontSize: '1.3rem',
-  padding: '5px',
-
-
+  // padding: '5px',
+  color: 'white'
 }
+
+
 
 const titleStyle = {
   color: 'white',
@@ -68,10 +71,11 @@ const rowStyle = {
 
 export default class SearchResult extends Component {
 
-  constructor(props) {
+  constructor(props, ctx) {
     super(props);
     this.state = { items: [], value: props.params.id, isLoading: true }
     this.props = props
+    this.store = ctx.store
     this.rows = this.rows.bind(this)
     this.handler = this.handler.bind(this)
   }
@@ -115,33 +119,29 @@ export default class SearchResult extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-
-
     if (nextProps.params.id !== this.props.params.id) {
       this.setState({ value: nextProps.params.id, items: [], isLoading: true })
-      //   this.state.value = nextProps.params.id
       this.performRequest(nextProps.params.id)
-
-
     }
+  }
 
+  favorite() {
+    console.log('sskk', this.props)
+    this.store.dispatch(addFavorite(this.props.location.state.objectId))
 
   }
 
   refresh() {
-
-
     this.setState({ isLoading: true })
     this.performRequest(this.props.params.id, true)
   }
 
   rows(item, index) {
     let thedate = moment(item.date).fromNow()
-    //   console.log(thedate.fromNow())
-
     let start = item.title.lastIndexOf(" - ")
     let source = item.title.substring(start, item.title.length)
     let title = item.title.replace(source, "")
+
     return <div style={rowStyle} key={index}>
       <div style={headerStyle}>
         <div style={titleStyle}>{title}</div>
@@ -155,7 +155,7 @@ export default class SearchResult extends Component {
           fontWeight: 'bold',
           paddingRight: '5px'
         }}>{source}</div>
-        <div style={{paddingRight: '5px'}}>
+        <div style={{ paddingRight: '5px' }}>
           <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
       </div>
@@ -166,18 +166,24 @@ export default class SearchResult extends Component {
       return <div style={divStyle}><Spinner /></div>
     }
     else {
+      let faveStyle = { color: 'white', fontSize: '1.3rem', }
+      let item = this.props.location.state
+      if (item.isFavorite) {
+        faveStyle = { color: 'yellow', fontSize: '1.3rem', }
+      }
       let items = this.state.items
       items.sort((a, b) => {
         return moment(b.date).valueOf() - moment(a.date).valueOf()
       })
       let targetLink = `/topRelated/${this.props.params.id}`
       return <div style={divStyle}>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{   padding: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <h1 style={{ padding: '5px' }}>{this.state.value}  </h1>
-          <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
-          <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
-          <i style={faStyle} className="fa fa-star" aria-hidden="true"></i>
-
+          <div>
+            <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
+            <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
+            <i style={faveStyle} onClick={e => this.favorite()} className="fa fa-star" aria-hidden="true"></i>
+          </div>
         </div>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', flex: 1, overflow: 'scroll' }} className="list-group">
@@ -206,3 +212,6 @@ export default class SearchResult extends Component {
 
 }
 
+SearchResult.contextTypes = {
+  store: React.PropTypes.object.isRequired,
+}

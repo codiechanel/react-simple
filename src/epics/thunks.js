@@ -4,7 +4,7 @@ import * as constant from '../common/constants'
 // import 'rxjs/add/observable/dom/ajax'
 
 export function loadCategories() {
- 
+
   return function (dispatch) {
     return getCategories('trends').then(
       items => dispatch({ type: constant.CATEGORIES_LOADED, payload: items }),
@@ -32,9 +32,18 @@ export function updateKeyword(item) {
   };
 }
 
+export function addFavorite(objectId) {
+  return function (dispatch) {
+    return addFavoriteApi(objectId).then(
+      item => dispatch({ type: constant.FAVORITE_ADDED, payload: item }),
+      err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
+    );
+  };
+}
+
 export function addKeyword(keyword, category) {
   return function (dispatch) {
-    return addKeywordApi(keyword,category).then(
+    return addKeywordApi(keyword, category).then(
       item => dispatch({ type: constant.KEYWORD_ADDED, payload: item }),
       err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
     );
@@ -55,7 +64,7 @@ export function deleteKeyword(objectId, index) {
     return deleteKeywordApi(objectId)
       .then(data => {
         dispatch({ type: constant.KEYWORD_DELETED, objectId })
-    
+
       })
   }
 
@@ -76,7 +85,7 @@ export function deleteRepo(objectId, index) {
 
 function getKeywords(project) {
   var identityId = AWS.config.credentials.identityId
- 
+
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: "UserData2",
@@ -86,19 +95,19 @@ function getKeywords(project) {
     ExpressionAttributeNames: {
       "#userId": "userId",
       "#type": "type",
-       "#project": "project"
-      
+      "#project": "project"
+
     },
     ExpressionAttributeValues: {
       ":userId": identityId,
-      ":type":  'keyword',
-       ":project": project,
-       
+      ":type": 'keyword',
+      ":project": project,
+
     }
   };
 
   return new Promise(function (resolve, reject) {
-   
+
     docClient.query(params, (err, data) => {
       if (err) {
         reject(err)
@@ -112,7 +121,7 @@ function getKeywords(project) {
 
   });
 
-  
+
 
 }
 
@@ -136,6 +145,45 @@ function deleteKeywordApi(objectId) {
 }
 
 
+function addFavoriteApi(objectId) {
+   var identityId = AWS.config.credentials.identityId;
+  var docClient = new AWS.DynamoDB.DocumentClient();
+  var table = "UserData2";
+
+  var params = {
+    TableName: table,
+    Key: {
+      "userId": identityId,
+      "objectId": objectId,
+    },
+    // Item: {
+    //   "userId": identityId,
+    //   "objectId": objectId,
+    // },
+    UpdateExpression: 'set isFavorite = :fave',
+      ExpressionAttributeValues: {
+      ":fave": true,
+    },
+    ReturnConsumedCapacity: "TOTAL"
+  };
+
+  return new Promise(function (resolve, reject) {
+    docClient.update(params, (err, data, y) => {
+      if (err) {
+        // console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+        reject(err)
+      } else {
+
+        resolve(data)
+      }
+    });
+
+  })
+
+
+}
+
+
 function updateKeywordApi(item) {
   var docClient = new AWS.DynamoDB.DocumentClient();
   var table = "UserData2";
@@ -152,7 +200,7 @@ function updateKeywordApi(item) {
         // console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         reject(err)
       } else {
- 
+
         resolve(params.Item)
       }
     });
@@ -183,7 +231,7 @@ function addKeywordApi(name, category = 'Others') {
       "type": 'keyword',
       name,
       category,
-      project: 'trends'     
+      project: 'trends'
 
     },
     ReturnConsumedCapacity: "TOTAL"
@@ -195,7 +243,7 @@ function addKeywordApi(name, category = 'Others') {
         // console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         reject(err)
       } else {
- 
+
         resolve(params.Item)
       }
     });
@@ -243,12 +291,12 @@ function getCategories(project) {
     ExpressionAttributeNames: {
       "#userId": "userId",
       "#type": "type",
-       "#project": "project"
+      "#project": "project"
     },
     ExpressionAttributeValues: {
       ":userId": identityId,
       ":type": "category",
-       ":project": project,
+      ":project": project,
     }
   };
 
