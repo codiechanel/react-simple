@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 // import * as constant from '../common/constants'
 //import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
-import {  loadCategories } from '../epics/thunks'
+import { loadCategories } from '../epics/thunks'
 
 
 const divStyle = {
@@ -31,7 +31,7 @@ class Sidebar extends Component {
             <Link to={targetLink}> {item.name} </Link></div>
     }
     sort(keywords) {
-        keywords.sort(function(a, b) {
+        keywords.sort(function (a, b) {
             if (a.objectId < b.objectId) return 1;
             if (a.objectId > b.objectId) return -1;
             return 0;
@@ -39,10 +39,16 @@ class Sidebar extends Component {
     }
     render() {
         let keywords = this.props.categories
-     //   this.sort(keywords)
+        //   this.sort(keywords)
 
         return (<div style={divStyle}>
             <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
+                <div className="list-group-item" key='9999'>
+                    <Link to='/keywords/Favorites'> Favorites </Link>
+                </div>
+                <div className="list-group-item" key='9998'>
+                    <Link to='/keywords/Recent'> Recent </Link>
+                </div>
                 {keywords.map(this.rows)}
             </div></div>)
 

@@ -33,6 +33,14 @@ class Keywords extends Component {
 
     }
 
+       sort(keywords) {
+        keywords.sort(function (a, b) {
+            if (a.objectId < b.objectId) return 1;
+            if (a.objectId > b.objectId) return -1;
+            return 0;
+        })
+    }
+
     rows(item, index) {
         let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
@@ -40,12 +48,27 @@ class Keywords extends Component {
         </div>
     }
     render() {
-       
-         
-       let keywords = this.props.keywords.filter(item => {
-        //    console.log(item.category,this.props.params.id)
-            return (item.category === this.props.params.id)
-        })
+        let keywords
+
+        if (this.props.params.id === 'Favorites') {
+            keywords = this.props.keywords.filter(item => {
+                //    console.log(item.category,this.props.params.id)
+                return item.isFavorite
+            })
+        }
+        else if (this.props.params.id === 'Recent') {
+              keywords = this.props.keywords
+              this.sort(keywords)
+
+        }
+        else {
+            keywords = this.props.keywords.filter(item => {
+                //    console.log(item.category,this.props.params.id)
+                return (item.category === this.props.params.id)
+            })
+        }
+
+
         return <div style={divStyle}>
             <h1 style={{ padding: '5px' }}>{this.props.params.id}</h1>
 
@@ -55,7 +78,7 @@ class Keywords extends Component {
 
             <div className="input-group">
                 <input ref={c => this.input = c} type="text"
-                   
+
                     className="form-control" placeholder="Search for..." />
                 <span className="input-group-btn">
                     <button onClick={this.handler} className="btn btn-secondary" type="button">Quick Add!</button>
@@ -65,7 +88,7 @@ class Keywords extends Component {
     }
 
     componentDidMount() {
-       
+
         if (this.props.keywords.length === 0) {
 
             this.props.dispatch(loadKeywords())
