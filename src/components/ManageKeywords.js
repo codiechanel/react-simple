@@ -32,6 +32,13 @@ class ManageKeywords extends Component {
         this.props.dispatch(addKeyword(this.state.value))
 
     }
+      sort(keywords) {
+        keywords.sort(function (a, b) {
+            if (a.objectId < b.objectId) return 1;
+            if (a.objectId > b.objectId) return -1;
+            return 0;
+        })
+    }
     delete(id, index) {
         console.log('click', id)
         this.props.dispatch(deleteKeyword(id, index))
@@ -45,11 +52,13 @@ class ManageKeywords extends Component {
         </div>
     }
     render() {
+         let keywords = this.props.keywords
+            this.sort(keywords)
         return <div style={divStyle}>
             <h1 style={{ padding: '5px' }}>Manage Keywords</h1>
 
             <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
-                {this.props.keywords.map(this.rows)}
+                {keywords.map(this.rows)}
             </div>
 
             <div className="input-group">

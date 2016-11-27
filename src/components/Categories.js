@@ -41,7 +41,7 @@ class Categories extends Component {
         //     console.log(this.state)
         return (<div style={divStyle} >
 
-            <h1 style={{ padding: '5px' }}>Categories</h1>
+            <h1 style={{ padding: '5px' }}>Manage Categories</h1>
             <div style={{ flex: 1 }} className="list-group">
                 {this.props.categories.map(this.rows)}
             </div>
@@ -59,8 +59,6 @@ class Categories extends Component {
     }
 
     componentDidMount() {
-        //   console.log('mounting categ')
-        
         if (this.props.categories.length === 0) {
 
             this.props.dispatch(loadCategories())

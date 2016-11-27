@@ -88,6 +88,8 @@ export default class SearchResult extends Component {
 
   }
 
+  
+
   performRequest(keyword, refresh = false) {
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
     let storageSupport = (typeof (Storage) !== "undefined")
@@ -97,7 +99,7 @@ export default class SearchResult extends Component {
       this.setState({ items, isLoading: false })
     }
     else {
-      let url = `https://037945b8-0ee0-4-231-b9ee.azurewebsites.net//rss?keyword=${keyword}`
+      let url = `https://037945b8-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${keyword}`
       const settings2 = {
         url,
         responseType: 'json'

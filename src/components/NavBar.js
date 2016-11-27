@@ -61,11 +61,12 @@ class NavBar extends Component {
 
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/categories">Categories</Link>
+              <Link className="nav-link" to="/categories">Manage Categories</Link>
 
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/about">About</a>
+            <Link className="nav-link" to="/risingSearches">Rising Searches</Link>
+        
             </li>
 
           </ul>
