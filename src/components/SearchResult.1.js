@@ -22,29 +22,7 @@ const faStyle = {
   fontSize: '1.3rem',
   padding: '5px',
 
-
 }
-
-const titleStyle = {
-   color: 'white',
-  fontSize : '1.5rem',
- fontWeight: 'bold',
- fontFamily: 'Lato'
-  // 'Montserrat'
-  // 'Nunito'
-
-}
-
-const rowStyle = {
- backgroundColor: '#303F9F',
- padding: '15px',
-
-  margin: '5px',
- flex: '45%',
- borderRadius: '15px'
-
-}
-
 
 export default class SearchResult extends Component {
 
@@ -118,8 +96,7 @@ export default class SearchResult extends Component {
   rows(item, index) {
     let thedate = moment(item.date).fromNow()
     //   console.log(thedate.fromNow())
-    return <div  style={rowStyle}  key={index}>
-    <div style={titleStyle}>{item.title}</div>
+    return <div className="list-group-item" key={index}><p>{item.title}</p>
       <p className="text-muted">{thedate}</p>
       <a href={item.link} target="_blank"><i className="fa fa-external-link" aria-hidden="true"></i></a></div>
   }
@@ -139,10 +116,10 @@ export default class SearchResult extends Component {
           <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
           <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
           <i style={faStyle} className="fa fa-star" aria-hidden="true"></i>
-   
+       
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection:'row', flex: 1, overflow: 'scroll' }} className="list-group">
+        <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
           {items.map(this.rows)}
         </div>
 
