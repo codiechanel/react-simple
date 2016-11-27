@@ -127,7 +127,15 @@ export default class SearchResult extends Component {
 
   favorite() {
     console.log('sskk', this.props)
-    this.store.dispatch(addFavorite(this.props.location.state.objectId))
+    let item = this.props.location.state
+    if (!item.hasOwnProperty('isFavorite')) {
+      item = Object.assign({}, item, { isFavorite: true })
+    }
+    else {
+       item = Object.assign({}, item, { isFavorite: !item.isFavorite })
+    }
+
+    this.store.dispatch(addFavorite(item))
 
   }
 
@@ -177,9 +185,9 @@ export default class SearchResult extends Component {
       })
       let targetLink = `/topRelated/${this.props.params.id}`
       return <div style={divStyle}>
-        <div style={{   padding: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <h1 style={{ padding: '5px' }}>{this.state.value}  </h1>
-          <div>
+          <div style={{ padding: '5px' }}>
             <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
             <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
             <i style={faveStyle} onClick={e => this.favorite()} className="fa fa-star" aria-hidden="true"></i>

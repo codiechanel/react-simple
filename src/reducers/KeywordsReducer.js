@@ -14,8 +14,11 @@ function KeywordsReducer(state = [], action) {
       let filtered = state.filter(item => item.objectId !== action.payload.objectId)
       return [...filtered, action.payload]
       case constant.FAVORITE_ADDED:
+
       console.log('fav added',action.payload)
-      return state
+        let filterFave = state.filter(item => item.objectId !== action.payload.objectId)
+      return [...filterFave, action.payload]
+     
 
     default:
       return state

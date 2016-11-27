@@ -32,10 +32,10 @@ export function updateKeyword(item) {
   };
 }
 
-export function addFavorite(objectId) {
+export function addFavorite(item) {
   return function (dispatch) {
-    return addFavoriteApi(objectId).then(
-      item => dispatch({ type: constant.FAVORITE_ADDED, payload: item }),
+    return addFavoriteApi(item).then(
+      data => dispatch({ type: constant.FAVORITE_ADDED, payload: item }),
       err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
     );
   };
@@ -145,16 +145,18 @@ function deleteKeywordApi(objectId) {
 }
 
 
-function addFavoriteApi(objectId) {
+function addFavoriteApi(item) {
    var identityId = AWS.config.credentials.identityId;
   var docClient = new AWS.DynamoDB.DocumentClient();
   var table = "UserData2";
+  // let isFavorite = true
+  // if (item.hasOwnProperty('isFavorite')) isFavorite = item.isFavorite
 
   var params = {
     TableName: table,
     Key: {
       "userId": identityId,
-      "objectId": objectId,
+      "objectId": item.objectId,
     },
     // Item: {
     //   "userId": identityId,
@@ -162,7 +164,7 @@ function addFavoriteApi(objectId) {
     // },
     UpdateExpression: 'set isFavorite = :fave',
       ExpressionAttributeValues: {
-      ":fave": true,
+      ":fave": item.isFavorite,
     },
     ReturnConsumedCapacity: "TOTAL"
   };
