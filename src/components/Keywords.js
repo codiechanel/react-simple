@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux'
 // import Rx from 'rxjs/Rx'
 // import 'rxjs/add/observable/dom/ajax'
-import { addKeyword, loadKeywords, deleteKeyword } from '../epics/thunks'
+import { addKeyword, loadKeywords } from '../epics/thunks'
 
 const divStyle = {
 
@@ -32,15 +32,11 @@ class Keywords extends Component {
         this.props.dispatch(addKeyword(this.input.value, this.props.params.id))
 
     }
-    delete(id, index) {
-        console.log('click', id)
-        this.props.dispatch(deleteKeyword(id, index))
-    }
+
     rows(item, index) {
         let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
         return <div className="list-group-item" key={index}>
             <Link to={targetLink}> {item.name} </Link>
-            <i onClick={e => this.delete(item.objectId, index)} className="fa fa-trash" aria-hidden="true"></i>
         </div>
     }
     render() {

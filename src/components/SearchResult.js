@@ -113,8 +113,10 @@ export default class SearchResult extends Component {
       return <div style={divStyle}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <h1 style={{ padding: '5px' }}>{this.state.value}  </h1>
-          <Link to={targetLink}> <i style={faStyle} className="fa fa-trophy" aria-hidden="true"></i></Link>
+          <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
           <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
+          <i style={faStyle} className="fa fa-star" aria-hidden="true"></i>
+       
         </div>
 
         <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
