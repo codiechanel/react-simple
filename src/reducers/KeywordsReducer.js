@@ -13,12 +13,14 @@ function KeywordsReducer(state = [], action) {
     case constant.KEYWORD_UPDATED:
       let filtered = state.filter(item => item.objectId !== action.payload.objectId)
       return [...filtered, action.payload]
-      case constant.FAVORITE_ADDED:
-
-      console.log('fav added',action.payload)
-        let filterFave = state.filter(item => item.objectId !== action.payload.objectId)
+    case constant.FAVORITE_ADDED:
+      let filterFave = state.filter(item => item.objectId !== action.payload.objectId)
       return [...filterFave, action.payload]
-     
+    case constant.FACEBOOK_CONNECTED:
+    // clear previous entries
+      return []
+
+
 
     default:
       return state

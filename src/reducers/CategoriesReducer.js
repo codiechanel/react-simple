@@ -6,7 +6,9 @@ function CategoriesReducer(state = [], action) {
        return action.payload
     case constant.CATEGORY_ADDED:
       return [...state, action.payload]
-     //  return Object.assign({}, state, {  action: action.type })
+    case constant.FACEBOOK_CONNECTED:
+    // clear previous entries
+      return []
     default:
       return state
   }
