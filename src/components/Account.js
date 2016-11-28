@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import * as constant from '../common/constants'
 import { connect } from 'react-redux'
-import { loadCategories } from '../epics/thunks'
+import { loadCategories, loadKeywords } from '../epics/thunks'
 
 
 class Account extends Component {
@@ -34,6 +34,7 @@ class Account extends Component {
           console.log('fb', AWS.config.credentials.identityId)
           this.props.dispatch({ type: constant.FACEBOOK_CONNECTED })
           this.props.dispatch(loadCategories())
+           this.props.dispatch(loadKeywords())
 
 
         });
