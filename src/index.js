@@ -8,6 +8,7 @@ import ManageKeywords from './components/ManageKeywords'
 import Sidebar from './components/Sidebar'
 import SearchResult from './components/SearchResult'
 import TopRelated from './components/TopRelated'
+import HotTrends from './components/HotTrends'
 import Categories from './components/Categories'
 import EditKeyword from './components/EditKeyword'
 import RisingSearches from './components/RisingSearches'
@@ -61,8 +62,10 @@ ReactDOM.render(<Provider store={store} >
           <Match exactly pattern="/" component={App} />
           <Match exactly pattern="/categories" component={Categories} />
            <Match exactly pattern="/risingSearches" component={RisingSearches} />
-          <Match exactly pattern="/keywords/:id" component={Keywords} />
+            <Match exactly pattern="/hotTrends" component={HotTrends} />
+      
           <Match exactly pattern="/manageKeywords" component={ManageKeywords} />
+              <Match  pattern="/keywords/:id" component={Keywords} />
           <Match pattern="/topRelated/:id" component={TopRelated} />
           <Match pattern="/edit" component={EditKeyword} />
           <Match pattern="/searchResult/:id" component={SearchResult} />

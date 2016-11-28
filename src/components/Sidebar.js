@@ -59,10 +59,14 @@ class Sidebar extends Component {
                   <div className="list-group-item" key='9997'>
                     <Link to='/topRelated/All'><i className="fa fa-university" aria-hidden="true"></i> Top Related </Link>
                 </div>
-                   <div className="list-group-item" key='9996'>
+                <div className="list-group-item" key='9996'>
                     <Link to='/risingSearches'><i className="fa fa-eercast" aria-hidden="true"></i> Rising Searches </Link>
                 </div>
-                <div className="list-group-item" key='9995'> 
+                       <div className="list-group-item" key='9995'>
+                    <Link to='/hotTrends'><i className="fa fa-eercast" aria-hidden="true"></i> Hot Trends </Link>
+                </div>
+             
+                <div className="list-group-item" key='9994'> 
                 <a className="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           <i className="fa fa-folder-open" aria-hidden="true"></i> Categories
         </a>
