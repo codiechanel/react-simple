@@ -199,7 +199,7 @@ export default class SearchResult extends Component {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', flex: 1, overflow: 'scroll' }} className="list-group">
+        <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', flex: 1, overflowY: 'scroll' }} className="list-group">
           {items.map(this.rows)}
         </div>
 

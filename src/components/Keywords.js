@@ -61,6 +61,12 @@ class Keywords extends Component {
               this.sort(keywords)
 
         }
+          else if (this.props.params.id === 'Others') {
+            keywords = this.props.keywords.filter(item => {
+                //    console.log(item.category,this.props.params.id)
+                return !item.hasOwnProperty('category')
+            })
+        }
         else {
             keywords = this.props.keywords.filter(item => {
                 //    console.log(item.category,this.props.params.id)

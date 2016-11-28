@@ -26,7 +26,7 @@ export function loadKeywords() {
 export function updateKeyword(item) {
   return function (dispatch) {
     return updateKeywordApi(item).then(
-      item => dispatch({ type: constant.KEYWORD_UPDATED, payload: item }),
+      data => dispatch({ type: constant.KEYWORD_UPDATED, payload: item }),
       err => console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2))
     );
   };
@@ -158,10 +158,6 @@ function addFavoriteApi(item) {
       "userId": identityId,
       "objectId": item.objectId,
     },
-    // Item: {
-    //   "userId": identityId,
-    //   "objectId": objectId,
-    // },
     UpdateExpression: 'set isFavorite = :fave',
       ExpressionAttributeValues: {
       ":fave": item.isFavorite,
@@ -187,23 +183,33 @@ function addFavoriteApi(item) {
 
 
 function updateKeywordApi(item) {
+   var identityId = AWS.config.credentials.identityId;
   var docClient = new AWS.DynamoDB.DocumentClient();
   var table = "UserData2";
+  // let isFavorite = true
+  // if (item.hasOwnProperty('isFavorite')) isFavorite = item.isFavorite
 
   var params = {
     TableName: table,
-    Item: item,
+    Key: {
+      "userId": identityId,
+      "objectId": item.objectId,
+    },
+    UpdateExpression: 'set category = :cat',
+      ExpressionAttributeValues: {
+      ":cat": item.category,
+    },
     ReturnConsumedCapacity: "TOTAL"
   };
 
   return new Promise(function (resolve, reject) {
-    docClient.put(params, (err, data, y) => {
+    docClient.update(params, (err, data, y) => {
       if (err) {
         // console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
         reject(err)
       } else {
 
-        resolve(params.Item)
+        resolve(data)
       }
     });
 
@@ -212,7 +218,8 @@ function updateKeywordApi(item) {
 
 }
 
-function addKeywordApi(name, category = 'Others') {
+
+function addKeywordApi(name) {
   var identityId = AWS.config.credentials.identityId;
 
   var docClient = new AWS.DynamoDB.DocumentClient();
@@ -232,7 +239,6 @@ function addKeywordApi(name, category = 'Others') {
       "objectId": objectId,
       "type": 'keyword',
       name,
-      category,
       project: 'trends'
 
     },
@@ -283,7 +289,7 @@ function deleteRepoApi(objectId) {
 function getCategories(project) {
 
   var identityId = AWS.config.credentials.identityId
-  console.log('get cat',identityId)
+  // console.log('get cat',identityId)
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: "UserData2",

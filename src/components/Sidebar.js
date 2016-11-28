@@ -72,6 +72,9 @@ class Sidebar extends Component {
         </a>
 
                     <div id="collapseThree" style={{ flex: 1, paddingTop: '5px' }} className="list-group">
+                        <div style={{ border: 0 }} className="list-group-item" key='9000'>
+                            <Link to='/keywords/Others'> Others </Link>
+                        </div>
                         {categories.map(this.rows)}
                     </div>
                 </div>
@@ -84,7 +87,7 @@ class Sidebar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('wr p')
+     
 
 
     }
@@ -97,7 +100,7 @@ class Sidebar extends Component {
 
     componentDidMount() {
 
-    
+
 
 
     }

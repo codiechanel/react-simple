@@ -28,7 +28,6 @@ class ManageKeywords extends Component {
         this.handler = this.handler.bind(this)
     }
     handler() {
-        console.log('click')
         this.props.dispatch(addKeyword(this.state.value))
 
     }
@@ -57,7 +56,7 @@ class ManageKeywords extends Component {
         return <div style={divStyle}>
             <h1 style={{ padding: '5px' }}>Manage Keywords</h1>
 
-            <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
+            <div style={{ flex: 1, overflowY: 'scroll' }} className="list-group">
                 {keywords.map(this.rows)}
             </div>
 
