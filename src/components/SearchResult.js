@@ -156,7 +156,9 @@ export default class SearchResult extends Component {
   }
 
   showNew(itemDate) {
-    if (moment(itemDate).isAfter(moment.now())) {
+    let lastSaved = this.state.lastSaved
+   
+    if (lastSaved && moment(itemDate).isAfter(moment(lastSaved))) {
  return <span style={{ marginBottom: '5px'}} className="tag tag-primary">New</span>
     }
     else {
