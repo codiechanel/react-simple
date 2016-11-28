@@ -56,18 +56,12 @@ class NavBar extends Component {
               <Link className="nav-link" to="/manageKeywords">Manage Keywords</Link>
 
             </li>
-             <li className="nav-item">
-              <Link className="nav-link" to="/topRelated">Top Related</Link>
-
-            </li>
+         
             <li className="nav-item">
               <Link className="nav-link" to="/categories">Manage Categories</Link>
 
             </li>
-            <li className="nav-item">
-            <Link className="nav-link" to="/risingSearches">Rising Searches</Link>
         
-            </li>
 
           </ul>
         </div>

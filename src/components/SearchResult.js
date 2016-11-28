@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 import { Link } from 'react-router';
-// import * as constant from '../common/constants'
+import * as constant from '../common/constants'
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
@@ -99,7 +99,7 @@ export default class SearchResult extends Component {
       this.setState({ items, isLoading: false })
     }
     else {
-      let url = `https://037945b8-0ee0-4-231-b9ee.azurewebsites.net/rss?keyword=${keyword}`
+      let url = `${constant.ENDPOINT}/rss?keyword=${keyword}`
       const settings2 = {
         url,
         responseType: 'json'

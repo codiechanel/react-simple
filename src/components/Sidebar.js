@@ -27,7 +27,7 @@ class Sidebar extends Component {
     }
     rows(item, index) {
         let targetLink = `/keywords/${encodeURIComponent(item.name)}`
-        return <div className="list-group-item" key={index}>
+        return <div style={{border: 0}} className="list-group-item" key={index}>
             <Link to={targetLink}> {item.name} </Link></div>
     }
     sort(keywords) {
@@ -42,14 +42,39 @@ class Sidebar extends Component {
         //   this.sort(keywords)
 
         return (<div style={divStyle}>
-            <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
+            <div style={{ flex: 1, overflowY: 'scroll' }} className="list-group">
+              <div className="list-group-item" key='10001'>
+                    <Link to='/'><i className="fa fa-user" aria-hidden="true"></i> Account </Link>
+                </div>              
+                <div className="list-group-item" key='10000'>
+                    <Link to='/'><i className="fa fa-user" aria-hidden="true"></i> Manage </Link>
+                </div>
+
                 <div className="list-group-item" key='9999'>
-                    <Link to='/keywords/Favorites'> Favorites </Link>
+                    <Link to='/keywords/Favorites'><i className="fa fa-star" aria-hidden="true"></i> Favorites </Link>
                 </div>
                 <div className="list-group-item" key='9998'>
-                    <Link to='/keywords/Recent'> Recent </Link>
+                    <Link to='/keywords/Recent'><i className="fa fa-bandcamp" aria-hidden="true"></i> Recent </Link>
                 </div>
-                {keywords.map(this.rows)}
+                  <div className="list-group-item" key='9997'>
+                    <Link to='/topRelated/All'><i className="fa fa-university" aria-hidden="true"></i> Top Related </Link>
+                </div>
+                   <div className="list-group-item" key='9996'>
+                    <Link to='/risingSearches'><i className="fa fa-eercast" aria-hidden="true"></i> Rising Searches </Link>
+                </div>
+                <div className="list-group-item" key='9995'> 
+                <a className="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <i className="fa fa-folder-open" aria-hidden="true"></i> Categories
+        </a>
+
+                     <div id="collapseThree" style={{ flex: 1, paddingTop: '5px' }} className="list-group">
+  {keywords.map(this.rows)}
+                     </div>
+                </div>
+
+           
+          
+              
             </div></div>)
 
     }

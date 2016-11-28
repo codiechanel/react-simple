@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 //import { BrowserRouter, Match, Miss, Link } from 'react-router';
-// import * as constant from '../common/constants'
+import * as constant from '../common/constants'
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
@@ -50,7 +50,11 @@ export default class TopRelated extends Component {
             this.setState({ items })
         }
         else {
-            let url = `https://037945b8-0ee0-4-231-b9ee.azurewebsites.net/topRelated?keyword=${keyword}`
+           
+            let url = `${constant.ENDPOINT}/topRelated?keyword=${keyword}`
+            if (keyword === 'All') {
+                 url = `${constant.ENDPOINT}/topRelated`
+            }
             const settings2 = {
                 url,
                 responseType: 'json'

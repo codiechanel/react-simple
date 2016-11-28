@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 import {  Link } from 'react-router';
-// import * as constant from '../common/constants'
+import * as constant from '../common/constants'
 // import TopRelated from './TopRelated'
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
+import Spinner from 'react-spinner'
 
 const divStyle = {
 
@@ -21,7 +22,7 @@ export default class RisingSearches extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { items: [] }
+    this.state = { items: [], isLoading: true }
     this.props = props
     this.rows = this.rows.bind(this)
   }
@@ -40,28 +41,42 @@ export default class RisingSearches extends Component {
     </div>)
 
   }
+  refresh() {
+    this.setState({ isLoading: true })
+    this.performRequest( true)
+  }
 
   render() {
-    return (<div style={divStyle} >
-
+        if (this.state.isLoading) {
+      return <div style={divStyle}><Spinner /></div>
+    }
+    else {
+ return (<div style={divStyle} >
+       <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
       <h1 style={{ padding: '5px' }}>Rising Searches</h1>
-      <div style={{ flex: 1 }} className="list-group">
+         <div style={{ padding: '5px' }}>
+           <i onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
+          </div>
+      </div>
+      <div style={{ flex: 1,overflowY: 'scroll' }} className="list-group">
         {this.state.items.map(this.rows)}
       </div>
 
 
     </div>)
+    }
+   
   }
 
-  componentDidMount() {
-   let storageSupport = (typeof (Storage) !== "undefined")
+   performRequest(refresh = false) {
+ let storageSupport = (typeof (Storage) !== "undefined")
 
-    if ( storageSupport && localStorage.getItem('RisingSearches')) {
+  if (!refresh && storageSupport && localStorage.getItem('RisingSearches')) {
       let items = JSON.parse(localStorage.getItem('RisingSearches'))
-      this.setState({ items})
+      this.setState({ items, isLoading: false})
     }
     else {
-  let url = 'https://037945b8-0ee0-4-231-b9ee.azurewebsites.net/risingSearches'
+  let url = `${constant.ENDPOINT}/risingSearches`
     const settings2 = {
       url,
       responseType: 'json'
@@ -70,7 +85,7 @@ export default class RisingSearches extends Component {
     Rx.Observable.ajax(settings2).subscribe(e => {
        let items = []
                 let arr = e.response[0]
-                console.log(arr)
+      
                 for (var k in arr) {
              //         console.log(k, arr[k])
                     if (arr.hasOwnProperty(k)) {
@@ -81,12 +96,16 @@ export default class RisingSearches extends Component {
                  if (items.length !== 0) {
             localStorage.setItem('RisingSearches', JSON.stringify(items));
           }
-      this.setState({ items })
+      this.setState({ items,isLoading: false })
 
-      console.log(items, e)
+
     })
 
     }
+   }
+
+  componentDidMount() {
+   this.performRequest()
 
   
   }
