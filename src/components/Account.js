@@ -29,12 +29,12 @@ class Account extends Component {
         });
 
         // Obtain AWS credentials
-        AWS.config.credentials.get(function () {
+        AWS.config.credentials.get( () => {
           // Access AWS resources here.
           var identityId = AWS.config.credentials.identityId;
           this.props.dispatch({type:constant.FACEBOOK_CONNECTED })
 
-          console.log('AmazonCognitoIdentity facebook cool', identityId)
+          console.log(' facebook connected')
         });
 
       } else if (response.status === 'not_authorized') {
