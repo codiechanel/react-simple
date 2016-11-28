@@ -59,7 +59,7 @@ class Account extends Component {
     }
     else if (this.props.main.connected) {
        return (<div>
-      <div>guest</div>
+      <div>guest connected</div>
         <i className="fa fa-user" aria-hidden="true"></i> <button onClick={e => this.login()} type="button" className="btn btn-primary">Login</button>
       </div>)
     }

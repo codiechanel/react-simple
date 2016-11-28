@@ -61,11 +61,7 @@ class NavBar extends Component {
               <Link className="nav-link" to="/categories">Manage Categories</Link>
 
             </li>
-                <li className="nav-item">
-                <button type="button" className="btn btn-primary">Login</button>
-     
-            </li>
-
+      
 
         
 

@@ -31,6 +31,7 @@ const faStyle = {
 const titleStyle = {
   color: 'white',
   fontSize: '1.5rem',
+  //  textShadow: '1px 1px #000000',
   fontWeight: 'bold',
   // fontFamily: 'Lato'
   // 'Montserrat'
@@ -95,8 +96,8 @@ export default class SearchResult extends Component {
     let storageSupport = (typeof (Storage) !== "undefined")
 
     if (!refresh && storageSupport && localStorage.getItem(keyword)) {
-      let items = JSON.parse(localStorage.getItem(keyword))
-      this.setState({ items, isLoading: false })
+      let obj = JSON.parse(localStorage.getItem(keyword))
+      this.setState({ items: obj.items, isLoading: false, lastSaved: obj.timestamp })
     }
     else {
       let url = `${constant.ENDPOINT}/rss?keyword=${keyword}`
@@ -106,10 +107,17 @@ export default class SearchResult extends Component {
       }
 
       Rx.Observable.ajax(settings2).subscribe(e => {
+      
         let items = e.response
         if (storageSupport) {
           if (items.length !== 0) {
-            localStorage.setItem(keyword, JSON.stringify(items));
+
+            let obj = {
+              timestamp: moment.now(),
+              items
+            }
+
+            localStorage.setItem(keyword, JSON.stringify(obj));
           }
         }
         this.setState({ items, isLoading: false })
@@ -147,6 +155,16 @@ export default class SearchResult extends Component {
     this.performRequest(this.props.params.id, true)
   }
 
+  showNew(itemDate) {
+    if (moment(itemDate).isAfter(moment.now())) {
+ return <span style={{ marginBottom: '5px'}} className="tag tag-primary">New</span>
+    }
+    else {
+      return null
+    }
+   
+  }
+
   rows(item, index) {
     let thedate = moment(item.date).fromNow()
     let start = item.title.lastIndexOf(" - ")
@@ -171,6 +189,7 @@ export default class SearchResult extends Component {
         <div style={{ paddingRight: '5px', color: 'white' }}>
           <a href={item.link} target="_blank"><i style={{ color: 'white' }} className="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
+        {this.showNew(item.date)}
       </div>
     </div>
   }
