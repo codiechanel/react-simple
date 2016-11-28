@@ -27,7 +27,7 @@ class Sidebar extends Component {
     }
     rows(item, index) {
         let targetLink = `/keywords/${encodeURIComponent(item.name)}`
-        return <div style={{border: 0}} className="list-group-item" key={index}>
+        return <div style={{ border: 0 }} className="list-group-item" key={index}>
             <Link to={targetLink}> {item.name} </Link></div>
     }
     sort(keywords) {
@@ -38,14 +38,14 @@ class Sidebar extends Component {
         })
     }
     render() {
-        let keywords = this.props.categories
+        let categories = this.props.categories
         //   this.sort(keywords)
 
         return (<div style={divStyle}>
             <div style={{ flex: 1, overflowY: 'scroll' }} className="list-group">
-              <div className="list-group-item" key='10001'>
+                <div className="list-group-item" key='10001'>
                     <Account />
-                </div>              
+                </div>
                 <div className="list-group-item" key='10000'>
                     <Link to='/'><i className="fa fa-user" aria-hidden="true"></i> Manage </Link>
                 </div>
@@ -56,47 +56,37 @@ class Sidebar extends Component {
                 <div className="list-group-item" key='9998'>
                     <Link to='/keywords/Recent'><i className="fa fa-bandcamp" aria-hidden="true"></i> Recent </Link>
                 </div>
-                  <div className="list-group-item" key='9997'>
+                <div className="list-group-item" key='9997'>
                     <Link to='/topRelated/All'><i className="fa fa-university" aria-hidden="true"></i> Top Related </Link>
                 </div>
                 <div className="list-group-item" key='9996'>
                     <Link to='/risingSearches'><i className="fa fa-eercast" aria-hidden="true"></i> Rising Searches </Link>
                 </div>
-                       <div className="list-group-item" key='9995'>
+                <div className="list-group-item" key='9995'>
                     <Link to='/hotTrends'><i className="fa fa-eercast" aria-hidden="true"></i> Hot Trends </Link>
                 </div>
-             
-                <div className="list-group-item" key='9994'> 
-                <a className="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          <i className="fa fa-folder-open" aria-hidden="true"></i> Categories
+
+                <div className="list-group-item" key='9994'>
+                    <a className="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i className="fa fa-folder-open" aria-hidden="true"></i> Categories
         </a>
 
-                     <div id="collapseThree" style={{ flex: 1, paddingTop: '5px' }} className="list-group">
-  {keywords.map(this.rows)}
-                     </div>
+                    <div id="collapseThree" style={{ flex: 1, paddingTop: '5px' }} className="list-group">
+                        {categories.map(this.rows)}
+                    </div>
                 </div>
 
-           
-          
-              
+
+
+
             </div></div>)
 
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('wr p')
 
-        if (this.props.categories.length === 0) {
 
-            if (nextProps.main.connected) {
-                this.props.dispatch(loadCategories())
-            }
-            else if (nextProps.main.fb_connected) {
-                console.log('rcv fb')
-
-                this.props.dispatch(loadCategories())
-
-            }
-        }
     }
 
 
@@ -106,6 +96,20 @@ class Sidebar extends Component {
 
 
     componentDidMount() {
+
+        if (this.props.categories.length === 0) {
+
+
+            if (this.props.main.connected) {
+                this.props.dispatch(loadCategories())
+            }
+            else if (this.props.main.fb_connected) {
+                console.log('rcv fb')
+
+                this.props.dispatch(loadCategories())
+
+            }
+        }
 
 
     }
