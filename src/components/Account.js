@@ -16,7 +16,7 @@ class Account extends Component {
 
   login() {
 
-    FB.login(function (response) {
+    FB.login( response => {
       console.log('clk', response)
       if (response.status === 'connected') {
 
