@@ -283,6 +283,7 @@ function deleteRepoApi(objectId) {
 function getCategories(project) {
 
   var identityId = AWS.config.credentials.identityId
+  console.log('get cat',identityId)
   var docClient = new AWS.DynamoDB.DocumentClient();
   var params = {
     TableName: "UserData2",
