@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 import { Link } from 'react-router';
-import * as constant from '../common/constants'
+
 // import { connect } from 'react-redux'
 
 class NavBar extends Component {
@@ -77,19 +77,7 @@ class NavBar extends Component {
 
 
   componentDidMount() {
-     AWS.config.region = 'us-east-1';
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: 'us-east-1:bad8ac29-9ab5-47f2-9b8c-e2514b0eefc0',
-
-    });
-
-    // Obtain AWS credentials
-    AWS.config.credentials.get(() => {
-      // Access AWS resources here.
-     console.log('aws', AWS.config.credentials.identityId)
-
-      this.store.dispatch({ type: constant.AWS_CONNECTED })
-     });
+  
   }
 
 }

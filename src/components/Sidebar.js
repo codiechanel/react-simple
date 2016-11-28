@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 // import * as constant from '../common/constants'
 //import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
-import { loadCategories } from '../epics/thunks'
+
 import Account from '../components/Account'
 
 const divStyle = {
@@ -97,19 +97,7 @@ class Sidebar extends Component {
 
     componentDidMount() {
 
-        if (this.props.categories.length === 0) {
-
-
-            if (this.props.main.connected) {
-                this.props.dispatch(loadCategories())
-            }
-            else if (this.props.main.fb_connected) {
-                console.log('rcv fb')
-
-                this.props.dispatch(loadCategories())
-
-            }
-        }
+    
 
 
     }
@@ -119,8 +107,6 @@ class Sidebar extends Component {
 function mapStateToProps(state, ownProps) {
 
     return {
-        keywords: state.keywords,
-        main: state.main,
         categories: state.categories
     }
 }
