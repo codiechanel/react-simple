@@ -88,7 +88,7 @@ export default class SearchResult extends Component {
 
   }
 
-  
+
 
   performRequest(keyword, refresh = false) {
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
@@ -135,7 +135,7 @@ export default class SearchResult extends Component {
       item = Object.assign({}, item, { isFavorite: true })
     }
     else {
-       item = Object.assign({}, item, { isFavorite: !item.isFavorite })
+      item = Object.assign({}, item, { isFavorite: !item.isFavorite })
     }
 
     this.store.dispatch(addFavorite(item))
@@ -152,13 +152,13 @@ export default class SearchResult extends Component {
     let start = item.title.lastIndexOf(" - ")
     let source = item.title.substring(start, item.title.length)
     let title = item.title.replace(source, "")
-// backgroundColor: '#303F9F',
-    let colors = ['#303F9F','#3F51B5','#448AFF','#388E3C','#8BC34A','#4CAF50','#455A64','#607D8B','#9E9E9E','#00796B']
-  let  rowNewStyle = Object.assign({}, rowStyle,{ backgroundColor: colors[index]})
+    // backgroundColor: '#303F9F',
+    let colors = ['#303F9F', '#3F51B5', '#448AFF', '#388E3C', '#8BC34A', '#4CAF50', '#455A64', '#607D8B', '#9E9E9E', '#00796B']
+    let rowNewStyle = Object.assign({}, rowStyle, { backgroundColor: colors[index] })
     return <div style={rowNewStyle} key={index}>
       <div style={headerStyle}>
         <div style={titleStyle}>{title}</div>
-        <div style={{color : 'black'}}>{thedate}</div>
+        <div style={{ color: 'black' }}>{thedate}</div>
 
       </div>
       <div style={footerStyle}>
@@ -168,8 +168,8 @@ export default class SearchResult extends Component {
           fontWeight: 'bold',
           paddingRight: '5px'
         }}>{source}</div>
-        <div style={{ paddingRight: '5px', color : 'white' }}>
-          <a href={item.link} target="_blank"><i style={{  color : 'white' }} className="fa fa-external-link" aria-hidden="true"></i></a>
+        <div style={{ paddingRight: '5px', color: 'white' }}>
+          <a href={item.link} target="_blank"><i style={{ color: 'white' }} className="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
       </div>
     </div>

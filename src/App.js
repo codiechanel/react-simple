@@ -20,40 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // googleTrends.trendData({ keywords: 'OJ Simpson' })
-    //   .then(function (trendData) {
-    //     console.log('here are the results', trendData);
-    //   })
-
-    // var options = {
-
-    //   keywords: ['metallica'],
-
-    // }
-
-
-    // const settings = {
-    //   url: 'https://www.google.com/trends/hottrends/hotItems',
-    //   responseType: 'text',
-    //   method: 'POST',
-    //   crossDomain: true,
-    //   headers: {
-
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   body: 'ajax=1&pn=p1&htv=m'
-    // }
-
-    // let url = 'http://1de8a0b2-0ee0-4-231-b9ee.azurewebsites.net/hotTrendsDetail'
-    // const settings2 = {
-    //   url,
-    //   responseType: 'json'
-    // }
-
-    //  Rx.Observable.ajax(settings2).subscribe(e => console.log(e))
-
-   
-
+    
   }
 
 }

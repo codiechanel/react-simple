@@ -72,7 +72,7 @@ class Keywords extends Component {
         return <div style={divStyle}>
             <h1 style={{ padding: '5px' }}>{this.props.params.id}</h1>
 
-            <div style={{ flex: 1, overflow: 'scroll' }} className="list-group">
+            <div style={{ flex: 1, overflowY: 'scroll' }} className="list-group">
                 {keywords.map(this.rows)}
             </div>
 
