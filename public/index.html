@@ -58,86 +58,8 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
-    function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
+  
 
-   function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-      console.log('auth rest',   FB.getAuthResponse()['accessToken'])
-   
-
-      // Add the Facebook access token to the Cognito credentials login map.
-      AWS.config.region = 'us-east-1';
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: 'us-east-1:bad8ac29-9ab5-47f2-9b8c-e2514b0eefc0',
-      Logins: {
-        'graph.facebook.com': response.authResponse.accessToken
-      }
-    });
-
-    // Obtain AWS credentials
-    AWS.config.credentials.get(function(){
-        // Access AWS resources here.
-          var identityId = AWS.config.credentials.identityId;
-
-  console.log('AmazonCognitoIdentity facebook cool', identityId)
-    });
-
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
-
-   
-function checkLoginState() {
-  console.log('checkLoginState')
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
-
-function logmein() {
-  FB.login(function(response) {
-    console.log('response',response)
-    statusChangeCallback(response)
-   // handle the response
- }, {scope: 'public_profile,email'});
-}
-
-    $(window).on('load', function() { 
-    //   let token = FB.getAuthResponse()['accessToken']
-      console.log( "window loaded cool");
-  //      FB.getLoginStatus(function(response) {
-  //   statusChangeCallback(response);
-  // });
- 
-    //    checkLoginState()
-      });
-$( document ).ready(function() {
-    console.log( "ready!" );
-    
-});
 </script>
   <div id="status">
   </div>

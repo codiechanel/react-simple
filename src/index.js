@@ -17,6 +17,7 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Match } from 'react-router';
 import thunk from 'redux-thunk'
+import * as constant from './common/constants'
 
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import keywords from './reducers/KeywordsReducer';
@@ -48,6 +49,12 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 // ]
 
 // localStorage.clear()
+
+window.onload = function() {
+     console.log( "react window loaded cool");
+     store.dispatch({type: constant.WINDOW_LOADED})
+}
+
 
 ReactDOM.render(<Provider store={store} >
   <BrowserRouter >

@@ -11,6 +11,7 @@ class Account extends Component {
     super(props);
     this.state = { items: [] }
     this.props = props
+    this.handledWinload = false
     //  this.rows = this.rows.bind(this)
   }
 
@@ -34,7 +35,7 @@ class Account extends Component {
           console.log('fb', AWS.config.credentials.identityId)
           this.props.dispatch({ type: constant.FACEBOOK_CONNECTED })
           this.props.dispatch(loadCategories())
-           this.props.dispatch(loadKeywords())
+          this.props.dispatch(loadKeywords())
 
 
         });
@@ -54,38 +55,47 @@ class Account extends Component {
   }
 
   render() {
-     if (this.props.main.fb_connected) {
+    if (this.props.main.fb_connected) {
       return <div>connected</div>
     }
     else if (this.props.main.connected) {
-       return (<div>
-      <div>guest connected</div>
+      return (<div>
+        <div>guest connected</div>
         <i className="fa fa-user" aria-hidden="true"></i> <button onClick={e => this.login()} type="button" className="btn btn-primary">Login</button>
       </div>)
     }
-   
+
     else {
       return (<div>logging in... </div>)
     }
 
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    if (!this.handledWinload && nextProps.main.winloaded) {
+      this.handledWinload = true
+      AWS.config.region = 'us-east-1';
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-east-1:bad8ac29-9ab5-47f2-9b8c-e2514b0eefc0',
+
+      });
+
+      // Obtain AWS credentials
+      AWS.config.credentials.get(() => {
+        // Access AWS resources here.
+        console.log('aws', AWS.config.credentials.identityId)
+
+
+        this.props.dispatch({ type: constant.AWS_CONNECTED })
+        this.props.dispatch(loadCategories())
+      });
+    }
+  }
+
+
   componentDidMount() {
-    AWS.config.region = 'us-east-1';
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: 'us-east-1:bad8ac29-9ab5-47f2-9b8c-e2514b0eefc0',
 
-    });
-
-    // Obtain AWS credentials
-    AWS.config.credentials.get(() => {
-      // Access AWS resources here.
-      console.log('aws', AWS.config.credentials.identityId)
-
-
-      this.props.dispatch({ type: constant.AWS_CONNECTED })
-      this.props.dispatch(loadCategories())
-    });
   }
 
 
