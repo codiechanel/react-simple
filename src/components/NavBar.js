@@ -86,7 +86,7 @@ class NavBar extends Component {
     // Obtain AWS credentials
     AWS.config.credentials.get(() => {
       // Access AWS resources here.
-      // var identityId = AWS.config.credentials.identityId;
+     console.log('aws', AWS.config.credentials.identityId)
 
       this.store.dispatch({ type: constant.AWS_CONNECTED })
      });

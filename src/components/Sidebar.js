@@ -90,8 +90,12 @@ class Sidebar extends Component {
             if (nextProps.main.connected) {
                 this.props.dispatch(loadCategories())
             }
+            else if (nextProps.main.fb_connected) {
+                console.log('rcv fb')
 
+                this.props.dispatch(loadCategories())
 
+            }
         }
     }
 
