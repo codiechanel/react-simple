@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 //import TopRelated from './TopRelated'
 import { connect } from 'react-redux'
 import { loadCategories } from '../epics/thunks'
-
+import Account from '../components/Account'
 
 const divStyle = {
 
@@ -44,7 +44,7 @@ class Sidebar extends Component {
         return (<div style={divStyle}>
             <div style={{ flex: 1, overflowY: 'scroll' }} className="list-group">
               <div className="list-group-item" key='10001'>
-                    <Link to='/'><i className="fa fa-user" aria-hidden="true"></i> Account </Link>
+                    <Account />
                 </div>              
                 <div className="list-group-item" key='10000'>
                     <Link to='/'><i className="fa fa-user" aria-hidden="true"></i> Manage </Link>
