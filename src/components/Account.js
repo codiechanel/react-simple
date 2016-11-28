@@ -1,16 +1,9 @@
 /*global AWS, FB*/
 import React, { Component } from 'react';
 import * as constant from '../common/constants'
+import { connect } from 'react-redux'
 
-const divStyle = {
 
-  display: 'flex',
-  // height: '100%',
-  flex: 1,
-  flexDirection: 'column',
-  backgroundColor: '#657687'
-
-}
 
 class Account extends Component {
 
