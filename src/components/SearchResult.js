@@ -61,6 +61,10 @@ const headerStyle = {
 const rowStyle = {
   // backgroundColor: '#303F9F',
   justifyContent: 'space-between',
+  // backgroundImage: "url('/cork-wallet.png')",
+   background: "url('/gradient-squares.png') red",
+  // backgroundBlendMode: 'lighten',
+
 
   display: 'flex',
   flexDirection: 'column',
@@ -211,6 +215,7 @@ export default class SearchResult extends Component {
     // backgroundColor: '#303F9F',
     let colors = ['#303F9F', '#3F51B5', '#448AFF', '#388E3C', '#8BC34A', '#4CAF50', '#455A64', '#607D8B', '#9E9E9E', '#00796B']
     let rowNewStyle = Object.assign({}, rowStyle, { backgroundColor: colors[index] })
+  // let rowNewStyle = rowStyle
     return <div style={rowNewStyle} key={index}>
       <div style={headerStyle}>
         <div style={titleStyle}>{title}</div>
