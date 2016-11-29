@@ -96,7 +96,7 @@ export default class SearchResult extends Component {
     let storageSupport = (typeof (Storage) !== "undefined")
 
     if (!refresh && storageSupport && localStorage.getItem(keyword)) {
-          let obj = JSON.parse(localStorage.getItem(keyword))
+      let obj = JSON.parse(localStorage.getItem(keyword))
 
       this.setState({ items: obj.items, isLoading: false, lastSaved: obj.timestamp })
     }
@@ -118,17 +118,7 @@ export default class SearchResult extends Component {
       Rx.Observable.ajax(settings2).subscribe(e => {
 
         let items = e.response
-        if (storageSupport) {
-          if (items.length !== 0) {
 
-            let obj = {
-              timestamp: moment.now(),
-              items
-            }
-            localStorage.removeItem(keyword)
-            localStorage.setItem(keyword, JSON.stringify(obj));
-          }
-        }
 
         let elapsed = moment().diff(moment(timestamp))
         //  moment(timestamp).from(moment())
@@ -140,6 +130,18 @@ export default class SearchResult extends Component {
         }
         else {
           this.setState({ items, isLoading: false, elapsed })
+        }
+
+        if (storageSupport) {
+          if (items.length >= 0) {
+
+            let obj = {
+              timestamp: moment.now(),
+              items
+            }
+            localStorage.removeItem(keyword)
+            localStorage.setItem(keyword, JSON.stringify(obj));
+          }
         }
 
 
@@ -178,11 +180,14 @@ export default class SearchResult extends Component {
   }
 
   showLastSaved() {
+    // if (storageSupport && localStorage.getItem(keyword)) {
+    //   let obj = JSON.parse(localStorage.getItem(keyword))
+    // }
 
-   let lastSaved = this.state.lastSaved
-   if (lastSaved) {
-     return <div  style={{ padding: '5px'}}>last updated on {moment(lastSaved).format('MMMM Do YYYY, h:mm:ss a')} </div>
-   }
+    let lastSaved = this.state.lastSaved
+    if (lastSaved) {
+      return <div style={{ padding: '5px' }}>last updated on {moment(lastSaved).format('MMMM Do YYYY, h:mm:ss a')} </div>
+    }
 
   }
 
@@ -231,8 +236,8 @@ export default class SearchResult extends Component {
   displayElapsed() {
     if (this.state.elapsed) {
       let elapse = this.state.elapsed
-      
-      return <div>{elapse.toLocaleString() } ms</div>
+
+      return <div>{elapse.toLocaleString()}ms</div>
     }
     else return null
   }
@@ -254,7 +259,7 @@ export default class SearchResult extends Component {
       return <div style={divStyle}>
         <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <h1 style={{ padding: '5px' }}>{this.state.value}  </h1>
-         
+
 
           <div style={{ padding: '5px', display: 'flex', flexDirection: 'row' }}>
 
@@ -266,7 +271,7 @@ export default class SearchResult extends Component {
           </div>
         </div>
 
-         {this.showLastSaved()}
+        {this.showLastSaved()}
 
         <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', flex: 1, overflowY: 'scroll' }} className="list-group">
           {items.map(this.rows)}
