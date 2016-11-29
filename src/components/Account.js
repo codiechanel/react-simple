@@ -95,6 +95,7 @@ class Account extends Component {
 
 
   componentDidMount() {
+    console.log('accnt did mount')
 
   }
 

@@ -100,10 +100,14 @@ export default class SearchResult extends Component {
       this.setState({ items: obj.items, isLoading: false, lastSaved: obj.timestamp })
     }
     else {
-      let url = `${constant.ENDPOINT}/rss?keyword=${keyword}`
+   //   let url = `${constant.ENDPOINT}/rss?keyword=${keyword}`
+  let url =    `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/rss/${keyword}`
       const settings2 = {
         url,
-        responseType: 'json'
+        // method: 'POST',
+        crossDomain: true,
+        // responseType: 'json',
+        // body: { "keyword": keyword }
       }
 
       Rx.Observable.ajax(settings2).subscribe(e => {
