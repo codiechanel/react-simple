@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
-import {  Link } from 'react-router';
-import * as constant from '../common/constants'
+import { Link } from 'react-router';
+// import * as constant from '../common/constants'
 // import TopRelated from './TopRelated'
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
@@ -34,8 +34,8 @@ export default class RisingSearches extends Component {
   rows(item, index) {
     let targetLink = `/searchResult/${encodeURIComponent(item.name)}`
 
-    return (<div className="list-group-item" key={index}>   
-    <Link to={{ pathname: targetLink, state: item }}> {item.name} ({item.value})</Link>
+    return (<div className="list-group-item" key={index}>
+      <Link to={{ pathname: targetLink, state: item }}> {item.name}({item.value})</Link>
 
 
     </div>)
@@ -43,71 +43,81 @@ export default class RisingSearches extends Component {
   }
   refresh() {
     this.setState({ isLoading: true })
-    this.performRequest( true)
+    this.performRequest(true)
   }
 
   render() {
-        if (this.state.isLoading) {
+    if (this.state.isLoading) {
       return <div style={divStyle}><Spinner /></div>
     }
     else {
- return (<div style={divStyle} >
-       <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-      <h1 style={{ padding: '5px' }}>Rising Searches</h1>
-         <div style={{ padding: '5px' }}>
-           <i onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
+      return (<div style={divStyle} >
+        <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <h1 style={{ padding: '5px' }}>Rising Searches</h1>
+          <div style={{ padding: '5px' }}>
+            <i onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
           </div>
-      </div>
-      <div style={{ flex: 1,overflowY: 'scroll' }} className="list-group">
-        {this.state.items.map(this.rows)}
-      </div>
+        </div>
+        <div style={{ flex: 1, overflowY: 'scroll' }} className="list-group">
+          {this.state.items.map(this.rows)}
+        </div>
 
 
-    </div>)
+      </div>)
     }
-   
+
   }
 
-   performRequest(refresh = false) {
- let storageSupport = (typeof (Storage) !== "undefined")
+  performRequest(refresh = false) {
+    let storageSupport = (typeof (Storage) !== "undefined")
 
-  if (!refresh && storageSupport && localStorage.getItem('RisingSearches')) {
+    if (!refresh && storageSupport && localStorage.getItem('RisingSearches')) {
       let items = JSON.parse(localStorage.getItem('RisingSearches'))
-      this.setState({ items, isLoading: false})
+      this.setState({ items, isLoading: false })
     }
     else {
-  let url = `${constant.ENDPOINT}/risingSearches`
-    const settings2 = {
-      url,
-      responseType: 'json'
-    }
+      // let url = `${constant.ENDPOINT}/risingSearches`
+      // const settings2 = {
+      //   url,
+      //   responseType: 'json'
+      // }
 
-    Rx.Observable.ajax(settings2).subscribe(e => {
-       let items = []
-                let arr = e.response[0]
-      
-                for (var k in arr) {
-             //         console.log(k, arr[k])
-                    if (arr.hasOwnProperty(k)) {
-                        items.push({name: k, value: arr[k] })
-                    }
+      let url = `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/trends`
 
-                }
-                 if (items.length !== 0) {
-            localStorage.setItem('RisingSearches', JSON.stringify(items));
+      const settings2 = {
+        url,
+        method: 'POST',
+        crossDomain: true,
+        responseType: 'json',
+        body: JSON.stringify({ "service": 'risingSearches' })
+      }
+
+      Rx.Observable.ajax(settings2).subscribe(e => {
+        let items = []
+        let arr = e.response[0]
+
+        for (var k in arr) {
+          //         console.log(k, arr[k])
+          if (arr.hasOwnProperty(k)) {
+            items.push({ name: k, value: arr[k] })
           }
-      this.setState({ items,isLoading: false })
+
+        }
+        if (items.length !== 0) {
+          localStorage.setItem('RisingSearches', JSON.stringify(items));
+        }
+        this.setState({ items, isLoading: false })
 
 
-    })
+      })
 
     }
-   }
+  }
 
   componentDidMount() {
-   this.performRequest()
+    this.performRequest()
 
-  
+
   }
 
 

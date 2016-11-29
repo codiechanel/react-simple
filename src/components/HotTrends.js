@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 import { Link } from 'react-router';
-import * as constant from '../common/constants'
+// import * as constant from '../common/constants'
 // import TopRelated from './TopRelated'
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
@@ -40,10 +40,14 @@ export default class HotTrends extends Component {
     }
     else {
 
-      let url = `${constant.ENDPOINT}/hotTrendsDetail`
+      let url = `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/trends`
+
       const settings2 = {
         url,
-        responseType: 'json'
+        method: 'POST',
+        crossDomain: true,
+        responseType: 'json',
+        body: JSON.stringify({ "service": 'hotTrendsDetail' })
       }
 
       Rx.Observable.ajax(settings2).subscribe(e => {
