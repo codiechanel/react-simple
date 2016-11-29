@@ -62,7 +62,7 @@ const rowStyle = {
   // backgroundColor: '#303F9F',
   justifyContent: 'space-between',
   // backgroundImage: "url('/cork-wallet.png')",
-   background: "url('/gradient-squares.png') red",
+   background: "url('/texture3.png') red",
   // backgroundBlendMode: 'lighten',
 
 
