@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Foo from '../Foo'
 import { Link } from 'react-router';
-import * as constant from '../common/constants'
+// import * as constant from '../common/constants'
 // import { connect } from 'react-redux'
 import Rx from 'rxjs/Rx'
 import 'rxjs/add/observable/dom/ajax'
@@ -75,7 +75,7 @@ export default class SearchResult extends Component {
 
   constructor(props, ctx) {
     super(props);
-    this.state = { items: [], value: props.params.id, isLoading: true }
+    this.state = { items: [], value: props.params.id, isLoading: true, refresh : false }
     this.props = props
     this.store = ctx.store
     this.rows = this.rows.bind(this)
@@ -84,12 +84,6 @@ export default class SearchResult extends Component {
   handler() {
     this.performRequest(this.state.value)
   }
-
-  componentWillUpdate(nextProps, nextState) {
-
-  }
-
-
 
   performRequest(keyword, refresh = false) {
     //   let url = `http://api.bing.com/osjson.aspx?query=clooney`
@@ -154,10 +148,11 @@ export default class SearchResult extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) {
-      this.setState({ value: nextProps.params.id, items: [], isLoading: true })
-      this.performRequest(nextProps.params.id)
-    }
+ 
+    // if (nextProps.params.id !== this.props.params.id) {
+    //   this.setState({ value: nextProps.params.id, items: [], isLoading: true })
+    //   this.performRequest(nextProps.params.id)
+    // }
   }
 
   favorite() {
@@ -175,14 +170,18 @@ export default class SearchResult extends Component {
   }
 
   refresh() {
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true, refresh: true })
     this.performRequest(this.props.params.id, true)
   }
+
+  
 
   showLastSaved() {
     // if (storageSupport && localStorage.getItem(keyword)) {
     //   let obj = JSON.parse(localStorage.getItem(keyword))
     // }
+
+  //  if (this.state)
 
     let lastSaved = this.state.lastSaved
     if (lastSaved) {

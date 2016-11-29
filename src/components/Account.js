@@ -18,7 +18,7 @@ class Account extends Component {
   login() {
 
     FB.login(response => {
-      console.log('clk', response)
+   
       if (response.status === 'connected') {
 
         AWS.config.region = 'us-east-1';
@@ -32,7 +32,7 @@ class Account extends Component {
         // Obtain AWS credentials
         AWS.config.credentials.get(() => {
           // Access AWS resources here.
-          console.log('fb', AWS.config.credentials.identityId)
+
           this.props.dispatch({ type: constant.FACEBOOK_CONNECTED })
           this.props.dispatch(loadCategories())
           this.props.dispatch(loadKeywords())
@@ -72,7 +72,7 @@ class Account extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
+
     if (!this.handledWinload && nextProps.main.winloaded) {
       this.handledWinload = true
       AWS.config.region = 'us-east-1';
@@ -84,7 +84,7 @@ class Account extends Component {
       // Obtain AWS credentials
       AWS.config.credentials.get(() => {
         // Access AWS resources here.
-        console.log('aws', AWS.config.credentials.identityId)
+ 
 
 
         this.props.dispatch({ type: constant.AWS_CONNECTED })
@@ -95,7 +95,6 @@ class Account extends Component {
 
 
   componentDidMount() {
-    console.log('accnt did mount')
 
   }
 
