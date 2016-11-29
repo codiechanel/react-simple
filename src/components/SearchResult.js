@@ -96,26 +96,27 @@ export default class SearchResult extends Component {
     let storageSupport = (typeof (Storage) !== "undefined")
 
     if (!refresh && storageSupport && localStorage.getItem(keyword)) {
-      let obj = JSON.parse(localStorage.getItem(keyword))
+          let obj = JSON.parse(localStorage.getItem(keyword))
+
       this.setState({ items: obj.items, isLoading: false, lastSaved: obj.timestamp })
     }
     else {
-   //   let url = `${constant.ENDPOINT}/rss?keyword=${keyword}`
-  // let url =    `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/rss/${keyword}`
-      let url =    `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/rss`
-   
+      //   let url = `${constant.ENDPOINT}/rss?keyword=${keyword}`
+      // let url =    `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/rss/${keyword}`
+      let url = `https://9ouw161vsk.execute-api.us-east-1.amazonaws.com/beta/rss`
+
       const settings2 = {
         url,
         method: 'POST',
         crossDomain: true,
         responseType: 'json',
-        body: JSON.stringify( { "keyword": keyword })
+        body: JSON.stringify({ "keyword": keyword })
       }
+
+      let timestamp = moment.now()
 
       Rx.Observable.ajax(settings2).subscribe(e => {
 
-        console.log(e)
-      
         let items = e.response
         if (storageSupport) {
           if (items.length !== 0) {
@@ -124,11 +125,24 @@ export default class SearchResult extends Component {
               timestamp: moment.now(),
               items
             }
-
+            localStorage.removeItem(keyword)
             localStorage.setItem(keyword, JSON.stringify(obj));
           }
         }
-        this.setState({ items, isLoading: false })
+
+        let elapsed = moment().diff(moment(timestamp))
+        //  moment(timestamp).from(moment())
+
+        if (refresh) {
+          let obj = JSON.parse(localStorage.getItem(keyword))
+
+          this.setState({ items, isLoading: false, elapsed, lastSaved: obj.timestamp })
+        }
+        else {
+          this.setState({ items, isLoading: false, elapsed })
+        }
+
+
 
       })
     }
@@ -145,7 +159,7 @@ export default class SearchResult extends Component {
   }
 
   favorite() {
-    console.log('sskk', this.props)
+
     let item = this.props.location.state
     if (!item.hasOwnProperty('isFavorite')) {
       item = Object.assign({}, item, { isFavorite: true })
@@ -163,16 +177,26 @@ export default class SearchResult extends Component {
     this.performRequest(this.props.params.id, true)
   }
 
+  showLastSaved() {
+
+   let lastSaved = this.state.lastSaved
+   if (lastSaved) {
+     return <div  style={{ padding: '5px'}}>last updated on {moment(lastSaved).format('MMMM Do YYYY, h:mm:ss a')} </div>
+   }
+
+  }
+
   showNew(itemDate) {
     let lastSaved = this.state.lastSaved
-   
+    //  console.log('lastSaved',lastSaved,moment(lastSaved).format('MMMM Do YYYY, h:mm:ss a'))
+
     if (lastSaved && moment(itemDate).isAfter(moment(lastSaved))) {
- return <span style={{ marginBottom: '5px'}} className="tag tag-primary">New</span>
+      return <span style={{ marginBottom: '5px' }} className="tag tag-primary">New</span>
     }
     else {
       return null
     }
-   
+
   }
 
   rows(item, index) {
@@ -203,6 +227,15 @@ export default class SearchResult extends Component {
       </div>
     </div>
   }
+
+  displayElapsed() {
+    if (this.state.elapsed) {
+      let elapse = this.state.elapsed
+      
+      return <div>{elapse.toLocaleString() } ms</div>
+    }
+    else return null
+  }
   render() {
     if (this.state.isLoading) {
       return <div style={divStyle}><Spinner /></div>
@@ -221,12 +254,19 @@ export default class SearchResult extends Component {
       return <div style={divStyle}>
         <div style={{ paddingLeft: '10px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <h1 style={{ padding: '5px' }}>{this.state.value}  </h1>
-          <div style={{ padding: '5px' }}>
+         
+
+          <div style={{ padding: '5px', display: 'flex', flexDirection: 'row' }}>
+
+            {this.displayElapsed()}
+
             <Link to={targetLink}> <i style={faStyle} className="fa fa-link" aria-hidden="true"></i></Link>
             <i style={faStyle} onClick={e => this.refresh()} className="fa fa-refresh" aria-hidden="true"></i>
             <i style={faveStyle} onClick={e => this.favorite()} className="fa fa-star" aria-hidden="true"></i>
           </div>
         </div>
+
+         {this.showLastSaved()}
 
         <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', flex: 1, overflowY: 'scroll' }} className="list-group">
           {items.map(this.rows)}
