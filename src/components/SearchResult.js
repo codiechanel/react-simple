@@ -208,7 +208,7 @@ export default class SearchResult extends Component {
   }
 
   rows(item, index) {
-    let thedate = moment(item.date).fromNow()
+    let thedate = moment(item.pubDate).fromNow()
     let start = item.title.lastIndexOf(" - ")
     let source = item.title.substring(start, item.title.length)
     let title = item.title.replace(source, "")
@@ -257,7 +257,7 @@ export default class SearchResult extends Component {
       }
       let items = this.state.items
       items.sort((a, b) => {
-        return moment(b.date).valueOf() - moment(a.date).valueOf()
+        return moment(b.pubDate).valueOf() - moment(a.pubDate).valueOf()
       })
       let targetLink = `/topRelated/${this.props.params.id}`
       return <div style={divStyle}>
